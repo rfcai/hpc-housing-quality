@@ -57,17 +57,20 @@ def clean_text(text):
     return text
     
 #define master function
-def read_then_clean(file_path, vars_to_clean):
+def read_then_clean(file_path, vars_to_clean, filter_series=None):
     """This is the master function for this module. It uses the previously defined helper functions,
     in order to output a clean dataset for user. It reads in a selected .csv file from a given filepath,
     and applies the previously defined cleaning functions to a list of variables provided by user.
+    
+    It can also optionally filter the df based on the survey series or TODO language.
 
     Args:
         file_path (str): This is a string indicating which file that you want to read in.
         vars_to_clean (list): This is a list of strings that indicate which columns you want to clean.
+        filter_series (list): This is a list of strings that indicate which survey series to keep.
 
     Returns:
-        df_raw: This is a pandas df that has columsn of text values that have been cleaned using the helper function.
+        df_clean: This is a pandas df that has columns of text values that have been cleaned using the helper function.
         
     TODO: Is it better to return an obj called df_clean to be more explicit to user?
 
@@ -83,12 +86,13 @@ def read_then_clean(file_path, vars_to_clean):
     
     #cleanup
     print("~begin cleaning")
+    df_clean = df_raw.copy()
     for var in vars_to_clean:
-        df_raw[var] = df_raw[var].apply(clean_text)
+        df_clean[var] = df_clean[var].apply(clean_text)
     print("data clean!")
     
     # Verify that the minimum rowcount continues to be met
-    if len(df_raw) < min_nrow:
+    if len(df_clean) < min_nrow:
         class RowCountException(Exception):
             """Custom exception class.
             
@@ -99,5 +103,10 @@ def read_then_clean(file_path, vars_to_clean):
         
         raise RowCountException("Minimum number of rows were not returned after cleaning. Data is being lost!")
         
+    # Filter data if filter arguments are provided by user
+    if filter_series != None:
+        print("~applying filter")
+        df_clean = df_clean[df_clean['survey_series'].isin(filter_series)]
+        
     #output a clean dataset
-    return df_raw
+    return df_clean
