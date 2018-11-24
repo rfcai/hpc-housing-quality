@@ -1,6 +1,24 @@
 
 #define necessary helper functions
-def cv_censor_col(df, colname, pct, weight_var, reps):
+def cv_censor_col(df, colname, pct=.2, weight_var=None, reps=5):
+    
+    """This function is used to create pandas dfs where a specified % of the values in a column have been censored
+    and replaced with NaN, so that they can be predicted in a cross-validation methodology. It returns a list of such
+    dfs that is the length of the reps argument.
+
+    Args:
+        df (pandas df): This is a pandas df that has columns with garbage values to be removed.
+        colname (str): This is a string indicating the name of a column that you want to censor and later predict.
+        pct (float): This is a value between 0-1 that indicates the fraction of values you want to censor. Default = 20%
+        weight_var (str): This is a string indicating the column name is used to weighted the sample. Default = No weight.
+        reps (int): This is an integer indicating the number of different training datasets to create. Default = 5x
+
+    Returns:
+        df_clean: This function returns a pandas df where the garbage codes have been replaced with NaN.
+        
+    TODO: ?
+
+    """
     
     #import packages
     import pandas as pd
@@ -16,9 +34,12 @@ def cv_censor_col(df, colname, pct, weight_var, reps):
         new_df = df.copy()
         new_df[colname + '_og'] = new_df[colname]
 
-        #draw a weighted sample
-        df_censor = new_df.sample(frac=pct, weights=weight_var)
-
+        #draw a weighted sample if weight var is specified
+        if weight_var != None:
+            df_censor = new_df.sample(frac=pct, weights=weight_var)
+        else:
+            df_censor = new_df.sample(frac=pct)
+            
         #now replace the sampled column with missing values in order to try and predict
         #note that replacement is only done on the sampled indices
         df_censor[colname] = "replace_me"

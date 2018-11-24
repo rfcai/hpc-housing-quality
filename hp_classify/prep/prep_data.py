@@ -14,7 +14,7 @@ def clean_text(text):
     Returns:
         text: This function returns a cleaned version of the input text.
         
-    TODO: Add functionality to input a selected value for NaN or missing values?
+    TODO: Add functionality to impute a selected value for NaN or missing values?
 
     """
     #import necessary modules
@@ -77,6 +77,7 @@ def read_then_clean(file_path, vars_to_clean, filter_series=None):
     """
     #import necessary modules
     import pandas as pd
+    import numpy as np
     
     #read in your data
     print("~begin reading")
@@ -110,3 +111,41 @@ def read_then_clean(file_path, vars_to_clean, filter_series=None):
         
     #output a clean dataset
     return df_clean
+
+#define function to replace meaningless values with NaNs
+def remove_garbage_codes(df, vars_to_clean, garbage_list):
+    """This helper function is used to remove garbage values from a pandas df, replacing them with NaN.
+
+    Args:
+    df (pandas df): This is a pandas df that has columns with garbage values to be removed.
+    vars_to_clean (list): This is a list of strings that indicate which columns you want to clean.
+    garbage_list (list): This is a list of strings that indicate which garbage values to replace with NaN
+
+    Returns:
+        df_clean: This function returns a pandas df where the garbage codes have been replaced with NaN.
+        
+    TODO: ?
+
+    """
+    
+    #import necessary modules
+    import pandas as pd
+    import numpy as np
+    
+    df_clean = df.copy()
+    
+    # build dictionary to map all garbage values to NaN
+    garb_dict = {}
+    for string in garbage_list:
+        garb_dict[string] = np.nan
+    
+    print(garb_dict)
+    
+    for var in vars_to_clean:
+        print("removing garbage from ", var)
+        #df_clean[var] = df_clean[var].map(garb_dict).fillna(df_clean[var]) 
+        #necessary to add fillna because map is non-exhaustive
+        df_clean[var].replace(garb_dict, inplace=True)
+        
+    #output a clean dataset
+    return df_clean    
