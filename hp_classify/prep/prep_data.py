@@ -143,9 +143,37 @@ def remove_garbage_codes(df, vars_to_clean, garbage_list):
     
     for var in vars_to_clean:
         print("removing garbage from ", var)
-        #df_clean[var] = df_clean[var].map(garb_dict).fillna(df_clean[var]) 
-        #necessary to add fillna because map is non-exhaustive
         df_clean[var].replace(garb_dict, inplace=True)
         
     #output a clean dataset
-    return df_clean    
+    return df_clean
+
+#define function to replace meaningless values with NaNs
+def extract_ranking(df, vars_to_clean):
+    """This helper function is used to extract the ordinal rankings from numerical coding.
+
+    Args:
+    df (pandas df): This is a pandas df that has columns with garbage values to be removed.
+    vars_to_rank (list): This is a list of strings that indicate which columns you want to extract ranks from.
+
+    Returns:
+        df_out: This function returns a pandas df with new vars added with the ordinal rank cols defined.
+        
+    TODO: ?
+
+    """
+    
+    #import necessary modules
+    import pandas as pd
+    import numpy as np
+    import re
+    
+    df_out = df.copy()
+    
+    for var in vars_to_clean:
+        print("defining ranking for ", var)
+        newcol = re.sub("_num", "_rank", var) 
+        df_out[newcol] = df_out[var].astype(str).str[0]
+
+    #output a clean dataset
+    return df_out
