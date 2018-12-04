@@ -1,0 +1,14 @@
+#Create new virtualenv:
+conda create -n <huff&puff&classify> <options>
+#switch to it:
+source activate <huff&puff&classify>
+which python
+#switch out:
+source deactivate <huff&puff&classify>
+#use conda or pip to install packages
+#export environment:
+conda env export > environment.yml #yet another markup language 
+#Create an environemtn from an exported env:
+conda env create -f environment.yml #-f: take the options and names and everything in that file
+#list environments
+conda env list
