@@ -13,20 +13,19 @@
 #     TODO: ?
 
 #     """
-    
-#     #import necessary modules
-#     import pandas as pd
-#     import numpy as np
-#     import re
-#     from fuzzywuzzy import fuzz
-#     from fuzzywuzzy import process
-    
+        
 #     df_out = df.copy()
 
 #     #output a clean dataset
 #     return 
 
 def build_corpus(df, str_var, rank_var, rank_list):
+    
+    #import necessary modules
+    import pandas as pd
+    import numpy as np
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
     
     out = []
     
@@ -41,6 +40,13 @@ def build_corpus(df, str_var, rank_var, rank_list):
     return(out, other)
 
 def fuzzy_scan(unknown_list, corpus_list):
+    
+    #import necessary modules
+    import pandas as pd
+    import numpy as np
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    from tqdm import tqdm_notebook
 
     distrib = []
 
@@ -83,3 +89,25 @@ def fuzzy_transform(df, var_list, grouping, fx, stub):
         df = df.assign(**kwargs)
 
     return(df)
+
+def fuzzy_density(df, facet, var_list, color_list, cutoff=None):
+    
+    #import necessary modules
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import seaborn as sns
+
+    g = sns.FacetGrid(distrib, col=facet, col_wrap=5, height=3)
+
+    for var in var_list:
+        ('plotting...', var)
+        g = g.map(sns.kdeplot, var+variant, shade=True, color=color_list[var])
+        
+        #add cutoff line if provided
+        if cutoff != None:
+            g = g.map(plt.axvline, x=cutoff, color='grey', linestyle='dashed')
+        
+    g = g.add_legend()
+    
+    return(g)
