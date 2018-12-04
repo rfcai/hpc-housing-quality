@@ -1,6 +1,4 @@
 
-rank_dictionary = {'natural':'1', 'rudimentary':'2', 'finished':'3'}
-
 def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75):
 
     #import packages
@@ -28,7 +26,7 @@ def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75):
     cv_df = []
     
     #loop over each cross validation:
-    for i in range(cv_list):
+    for i in tqdm_notebook(range(len(cv_list), desc="cv loop"):
         
         print('working on cv loop #', i)
         df = cv_list[i].copy() #subset the cv list to the current df
@@ -37,7 +35,7 @@ def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75):
         str_list, idk_strings = fz.build_corpus(df, base_var, rank_var, rank_values)
         
         #find distribution of scores for each string
-        distrib = fz.fuzzy_scan(idk_strings, str_list)
+        distrib = fz.fuzzy_scan(idk_strings[1:4], str_list)
         
         #TODO, output plots of distribution for analysis
 
