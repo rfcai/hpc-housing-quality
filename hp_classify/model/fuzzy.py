@@ -26,7 +26,7 @@
 #     #output a clean dataset
 #     return 
 
-def build_corpus(df, rank_var, str_var, rank_list):
+def build_corpus(df, str_var, rank_var, rank_list):
     
     out = []
     
@@ -45,7 +45,7 @@ def fuzzy_scan(unknown_list, corpus_list):
     distrib = []
 
     #loop over each unknown string
-    for x in range(len(unknown_list)): 
+    for x in tqdm_notebook(range(len(unknown_list)), desc="outer loop"): 
         unknown_str = unknown_list[x]
         print('analyzing...', unknown_str)
 
@@ -58,7 +58,7 @@ def fuzzy_scan(unknown_list, corpus_list):
 
             scores = []
             #loop over each word and compute the similarity score
-            for z in tqdm(range(len(corpus))): #tqdm=progress bar
+            for z in tqdm_notebook(range(len(corpus)), desc="inner loop", leave=False): #tqdm=progress bar
                 scores.append(fuzz.WRatio(unknown_str, corpus[z]))
 
             out.append(scores) #append scores to create a distribution for the entire corpus
