@@ -79,6 +79,16 @@ def fuzzy_scan(unknown_list, corpus_list):
 
     return(pd.concat(distrib))
 
+def fuzzy_predict(df, var_list, grouping, cutoff, dictionary):
+    
+    #calculate the probability that a classification score exceeds cutoff
+    out = df.groupby(grouping)[var_list].apply(lambda c: (c>cutoff).sum()/len(c))
+    
+    #return column w/ max value and map to rank with dictionary
+    out['pred'] = out[var_list].idxmax(axis=1).map(dictionary) 
+    
+    return(out)
+
 def fuzzy_transform(df, var_list, grouping, fx, stub):
 
     for var in var_list:
@@ -90,7 +100,7 @@ def fuzzy_transform(df, var_list, grouping, fx, stub):
 
     return(df)
 
-def fuzzy_density(df, facet, var_list, color_list, cutoff=None):
+def fuzzy_density(df, facet, var_list, color_list, variant="", cutoff=None):
     
     #import necessary modules
     import pandas as pd
@@ -98,7 +108,7 @@ def fuzzy_density(df, facet, var_list, color_list, cutoff=None):
     import numpy as np
     import seaborn as sns
 
-    g = sns.FacetGrid(distrib, col=facet, col_wrap=5, height=3)
+    g = sns.FacetGrid(df, col=facet, col_wrap=5, height=3)
 
     for var in var_list:
         ('plotting...', var)
