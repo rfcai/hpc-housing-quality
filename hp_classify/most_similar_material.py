@@ -1,3 +1,4 @@
+# %load most_similar_material.py
 def most_similar_material(input_word, vocabulary):
 
     """This function takes an "unknown"  word (i.e. a word outside our "dictionnary")
@@ -19,6 +20,18 @@ def most_similar_material(input_word, vocabulary):
     import nltk
     from nltk.corpus import wordnet as wn
 
+    # Verify that the input_word is a string
+    if type(input_word) is not str:
+        class TypeException(Exception):
+            """Custom exception class.
+
+            This exception is raised when the input word is not a string.
+
+            """
+            pass
+
+        raise TypeException("The input word is not a string!")
+
     # first, store each word of the vocabulary and its different meanings in a dictionary
     vocabulary_wn = []
     d = {}
@@ -38,7 +51,7 @@ def most_similar_material(input_word, vocabulary):
     # finally, we loop through the different meanings of our new word
     # we compare them to the different meanings of our vocabulary
     s_list = []
-
+    s1 = wn.synsets(input_word)
     maximum = 0
     synonym = None
     for s2 in vocabulary_wn:
@@ -49,5 +62,18 @@ def most_similar_material(input_word, vocabulary):
             if max(s_list) > maximum:
                 maximum = max(s_list)
                 synonym = s2
+
+    # We want to make sure we actually found a synonym
+    if synonym is None:
+        class NoneException(Exception):
+            """Custom exception class.
+
+            This exception is raised when there is no synonym found.
+
+            """
+            pass
+
+        raise NoneException("No synonym found for this material")
+
     # We return the word with the closest meaning according to wod2vec
     return(getKeysByValue(d,synonym))
