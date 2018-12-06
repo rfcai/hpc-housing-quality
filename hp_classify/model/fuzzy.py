@@ -36,6 +36,7 @@ def build_corpus(df, str_var, rank_var, rank_list):
     print("extracting unknown strings")
     other = df[~df[rank_var].isin(rank_list)][str_var].unique()
     other = other[~pd.isnull(other)] #cant classify NaN
+    print("need to classify", len(other), "unknown strings")
 
     return(out, other)
 
@@ -64,7 +65,7 @@ def fuzzy_scan(unknown_list, corpus_list):
 
             scores = []
             #loop over each word and compute the similarity score
-            for z in tqdm_notebook(range(len(corpus)), desc="computing each score", leave=False): #tqdm=progress bar
+            for z in range(len(corpus)):
                 scores.append(fuzz.WRatio(unknown_str, corpus[z]))
 
             out.append(scores) #append scores to create a distribution for the entire corpus
