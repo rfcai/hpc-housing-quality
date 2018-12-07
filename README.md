@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #embed status images (aka badges) to show the status of our build
 [![Build Status](https://travis-ci.com/rfcai/hpc-housing-quality.svg?branch=master)](https://travis-ci.com/rfcai/hpc-housing-quality)
 [![Coverage Status](https://coveralls.io/repos/github/jfrostad/hpc-housing-quality/badge.svg?branch=master)](https://coveralls.io/github/jfrostad/hpc-housing-quality?branch=master)
@@ -39,3 +40,7 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+=======
+[![Build Status](https://travis-ci.com/rfcai/hpc-housing-quality.svg?branch=master)](https://travis-ci.com/rfcai/hpc-housing-quality)
+[![Coverage Status](https://coveralls.io/repos/github/jfrostad/hpc-housing-quality/badge.svg?branch=master)](https://coveralls.io/github/jfrostad/hpc-housing-quality?branch=master)
+>>>>>>> 618b39e5c165db928fc97804c31d5cb754bdd05f

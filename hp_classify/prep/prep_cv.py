@@ -33,6 +33,7 @@ def cv_censor_col(df, colname, pct=.2, weight_var=None, reps=5):
         #first archive your old column in order to test later
         new_df = df.copy()
         new_df[colname + '_og'] = new_df[colname]
+        new_df['train'] = 1 #set column to specify whether training or test data
 
         #draw a weighted sample if weight var is specified
         if weight_var != None:
@@ -42,6 +43,7 @@ def cv_censor_col(df, colname, pct=.2, weight_var=None, reps=5):
             
         #now replace the sampled column with missing values in order to try and predict
         #note that replacement is only done on the sampled indices
+        df_censor['train'] = 0 #note that this sample is no longer training data (it is test)
         df_censor[colname] = "replace_me"
         new_df.update(df_censor, overwrite=True)
         new_df[colname].replace("replace_me", np.nan, inplace=True)
