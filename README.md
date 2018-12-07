@@ -1,8 +1,5 @@
 [![Build Status](https://travis-ci.com/rfcai/hpc-housing-quality.svg?branch=master)](https://travis-ci.com/rfcai/hpc-housing-quality)
-<<<<<<< HEAD
 [![Coverage Status](https://coveralls.io/repos/github/rfcai/hpc-housing-quality/badge.svg?branch=master)](https://coveralls.io/github/rfcai/hpc-housing-quality?branch=master)
-=======
-[![Coverage Status](https://coveralls.io/repos/github/jfrostad/hpc-housing-quality/badge.svg?branch=master)](https://coveralls.io/github/jfrostad/hpc-housing-quality?branch=master)
 
 ## Welcome to GitHub Pages
 
