@@ -1,21 +1,17 @@
 #define necessary helper functions
 def clean_text(text):
-    """This function is used to clean a selection of text. 
-    It uses several regular expressions and built in text commands in order to remove commonly seen 
+    """This function is used to clean a selection of text.
+    It uses several regular expressions and built in text commands in order to remove commonly seen
     errors,
-    nonsense values, 
-    punctuation, 
-    digits, and 
+    nonsense values,
+    punctuation,
+    digits, and
     extra whitespace.
-
-    Args:
-        text (str): This is a text value that needs to be cleaned.
-
-    Returns:
-        text: This function returns a cleaned version of the input text.
-        
     TODO: Add functionality to impute a selected value for NaN or missing values?
 
+    :param text (str): This is a text value that needs to be cleaned.
+
+    :return: text: This function returns a cleaned version of the input text.
     """
     #import necessary modules
     import re
