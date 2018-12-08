@@ -6,12 +6,22 @@
 Welcome to Huff & Puff & Classify's documentation!
 ==================================================
 
+This is the introduction to this project.
+
+Requirements:
+
+The project depends on xyz package.
+
+Contents:
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
-
-
+   
+   demo
+   project
+   code
+   
 Indices and tables
 ==================
 

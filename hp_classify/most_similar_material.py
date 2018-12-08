@@ -1,19 +1,12 @@
 # %load most_similar_material.py
 def most_similar_material(input_word, vocabulary):
-
     """This function takes an "unknown"  word (i.e. a word outside our "dictionnary")
     as input and look for the most similar word within a list of words (our "dictionnary").
 
-    Args:
-        input_word (str): This is a string whose meaning is ambiguous and therefore needs to be matched with a word
+    :param input_word: This is a string whose meaning is ambiguous and therefore needs to be matched with a word
         within our dictionnary.
-        vocabulary (list): This is a list of the words included in our vocabulary, i.e we know their rank
-
-    Returns:
-        most_similar_word: This function returns the most similar word within our list of words.
-
-    TODO: figure out a way to make this work for short sentences!
-
+    :param vocabulary: This is a list of the words included in our vocabulary, i.e we know their rank
+    :return: most_similar_word: This function returns the most similar word within our list of words.
     """
 
     #import packages
