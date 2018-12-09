@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Code Documentation &#8212; Huff &amp; Puff &amp; Classify  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/dotted.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -15,37 +16,27 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Project Summary" href="project.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="prev" title="Huff &amp; Puff &amp; Classify Demo" href="demo.html" /> 
   </head><body>
+        <div class="header">
+          <div class="header-top">
+            <h1 class="heading"><a href="index.html">
+              <span>Huff &amp; Puff &amp; Classify  documentation</span></a></h1>
+            <h2 class="heading"><span>Code Documentation</span></a></h2>
+          </div>
+          <div class="topnav">
+            
+        <p>
+        &#171;&#160;&#160;<a href="demo.html">Huff &amp; Puff &amp; Classify Demo</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
 
-<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
-<a href="index.html"><h1 style="font-size: 3em;">Sampledoc</h1></a>
-</div>
-
-
-
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Huff & Puff & Classify</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+            <div class="globaltoc">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="demo.html">Huff &amp; Puff &amp; Classify Demo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project.html">Project Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo.html">Huff &amp; Puff &amp; Classify Demo</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Code Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-most_similar_material">Find closest-spelling word</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-prep_cv">Prepare dataset for cross-validation</a></li>
@@ -56,51 +47,23 @@
 </li>
 </ul>
 
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="project.html" title="previous chapter">Project Summary</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="wrapper">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
+          <div class="document">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
   <div class="section" id="code-documentation">
 <h1>Code Documentation<a class="headerlink" href="#code-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-most_similar_material">
 <span id="find-closest-spelling-word"></span><h2>Find closest-spelling word<a class="headerlink" href="#module-most_similar_material" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="most_similar_material.most_similar_material">
-<code class="descclassname">most_similar_material.</code><code class="descname">most_similar_material</code><span class="sig-paren">(</span><em>input_word</em>, <em>vocabulary</em><span class="sig-paren">)</span><a class="headerlink" href="#most_similar_material.most_similar_material" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">most_similar_material.</code><code class="descname">most_similar_material</code><span class="sig-paren">(</span><em>input_word</em>, <em>vocabulary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/most_similar_material.html#most_similar_material"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#most_similar_material.most_similar_material" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function takes an “unknown”  word (i.e. a word outside our “dictionnary”)
 as input and look for the most similar word within a list of words (our “dictionnary”).</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -126,7 +89,7 @@ within our dictionnary.</li>
 <span id="prepare-dataset-for-cross-validation"></span><h2>Prepare dataset for cross-validation<a class="headerlink" href="#module-prep_cv" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="prep_cv.cv_censor_col">
-<code class="descclassname">prep_cv.</code><code class="descname">cv_censor_col</code><span class="sig-paren">(</span><em>df</em>, <em>colname</em>, <em>pct=0.2</em>, <em>weight_var=None</em>, <em>reps=5</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_cv.cv_censor_col" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_cv.</code><code class="descname">cv_censor_col</code><span class="sig-paren">(</span><em>df</em>, <em>colname</em>, <em>pct=0.2</em>, <em>weight_var=None</em>, <em>reps=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_cv.html#cv_censor_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_cv.cv_censor_col" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is used to create pandas dfs where a specified % of the values in a column have been censored
 and replaced with NaN, so that they can be predicted in a cross-validation methodology. It returns a list of such
 dfs that is the length of the reps argument.</p>
@@ -155,7 +118,7 @@ dfs that is the length of the reps argument.</p>
 <span id="clean-and-train-data"></span><h2>Clean and train data<a class="headerlink" href="#module-prep_data" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="prep_data.clean_text">
-<code class="descclassname">prep_data.</code><code class="descname">clean_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.clean_text" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">clean_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#clean_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.clean_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is used to clean a selection of text.
 It uses several regular expressions and built in text commands in order to remove commonly seen
 errors,
@@ -178,7 +141,7 @@ TODO: Add functionality to impute a selected value for NaN or missing values?</p
 
 <dl class="function">
 <dt id="prep_data.cleaning_block">
-<code class="descclassname">prep_data.</code><code class="descname">cleaning_block</code><span class="sig-paren">(</span><em>df</em>, <em>word</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.cleaning_block" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">cleaning_block</code><span class="sig-paren">(</span><em>df</em>, <em>word</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#cleaning_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.cleaning_block" title="Permalink to this definition">¶</a></dt>
 <dd><p>This helper function filters out special characters within number columns, and convert numbers from str to int.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -200,7 +163,7 @@ the number columns and covert the data type of the numbers from string to intege
 
 <dl class="function">
 <dt id="prep_data.extract_features">
-<code class="descclassname">prep_data.</code><code class="descname">extract_features</code><span class="sig-paren">(</span><em>df</em>, <em>LABEL</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.extract_features" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">extract_features</code><span class="sig-paren">(</span><em>df</em>, <em>LABEL</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#extract_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.extract_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a helper function that produces a list of features used for model training.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -221,7 +184,7 @@ the number columns and covert the data type of the numbers from string to intege
 
 <dl class="function">
 <dt id="prep_data.extract_ranking">
-<code class="descclassname">prep_data.</code><code class="descname">extract_ranking</code><span class="sig-paren">(</span><em>df</em>, <em>vars_to_clean</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.extract_ranking" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">extract_ranking</code><span class="sig-paren">(</span><em>df</em>, <em>vars_to_clean</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#extract_ranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.extract_ranking" title="Permalink to this definition">¶</a></dt>
 <dd><p>This helper function is used to extract the ordinal rankings from numerical coding.
 TODO: ?</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -243,7 +206,7 @@ TODO: ?</p>
 
 <dl class="function">
 <dt id="prep_data.load_data">
-<code class="descclassname">prep_data.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.load_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">load_data</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.load_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This helper function is used to load a dataset from a selected csv file.
 It monitors the runtime of the loading process and also truncates the dataset
 to six specified columns as the training attributes. values with 0 within the numbers
@@ -262,7 +225,7 @@ of roof, wall, floor are filtered out as well as rows containing nan.</p>
 
 <dl class="function">
 <dt id="prep_data.ranking">
-<code class="descclassname">prep_data.</code><code class="descname">ranking</code><span class="sig-paren">(</span><em>df</em>, <em>vals</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.ranking" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">ranking</code><span class="sig-paren">(</span><em>df</em>, <em>vals</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#ranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.ranking" title="Permalink to this definition">¶</a></dt>
 <dd><p>This helper function ranks the _num columns by the digit in tens, excluding the numbers smaller than 10
 or greater than 35, which are considered as invalid or missing values.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -284,7 +247,7 @@ or greater than 35, which are considered as invalid or missing values.</p>
 
 <dl class="function">
 <dt id="prep_data.read_then_clean">
-<code class="descclassname">prep_data.</code><code class="descname">read_then_clean</code><span class="sig-paren">(</span><em>file_path</em>, <em>vars_to_clean</em>, <em>filter_series=None</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.read_then_clean" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">read_then_clean</code><span class="sig-paren">(</span><em>file_path</em>, <em>vars_to_clean</em>, <em>filter_series=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#read_then_clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.read_then_clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the master function for this module. It uses the previously defined helper functions,
 in order to output a clean dataset for user. It reads in a selected .csv file from a given filepath,
 and applies the previously defined cleaning functions to a list of variables provided by user.</p>
@@ -311,7 +274,7 @@ function.</p>
 
 <dl class="function">
 <dt id="prep_data.remove_garbage_codes">
-<code class="descclassname">prep_data.</code><code class="descname">remove_garbage_codes</code><span class="sig-paren">(</span><em>df</em>, <em>vars_to_clean</em>, <em>garbage_list</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.remove_garbage_codes" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">remove_garbage_codes</code><span class="sig-paren">(</span><em>df</em>, <em>vars_to_clean</em>, <em>garbage_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#remove_garbage_codes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.remove_garbage_codes" title="Permalink to this definition">¶</a></dt>
 <dd><p>This helper function is used to remove garbage values from a pandas df, replacing them with NaN.
 TODO: ?</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -334,7 +297,7 @@ TODO: ?</p>
 
 <dl class="function">
 <dt id="prep_data.shuffle_redistribute">
-<code class="descclassname">prep_data.</code><code class="descname">shuffle_redistribute</code><span class="sig-paren">(</span><em>df</em>, <em>LABEL</em>, <em>Redistribute=True</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.shuffle_redistribute" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">shuffle_redistribute</code><span class="sig-paren">(</span><em>df</em>, <em>LABEL</em>, <em>Redistribute=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#shuffle_redistribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.shuffle_redistribute" title="Permalink to this definition">¶</a></dt>
 <dd><p>This helper function generalizes the distribution of the data set with respect to the three ranks (1,2,3),
 then it shuffles the data set to unbiased.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -358,7 +321,7 @@ rank_dist: This is a list of the number of data within each rank(1,2,3)</p>
 
 <dl class="function">
 <dt id="prep_data.train_test_split">
-<code class="descclassname">prep_data.</code><code class="descname">train_test_split</code><span class="sig-paren">(</span><em>df</em>, <em>features</em>, <em>LABEL</em><span class="sig-paren">)</span><a class="headerlink" href="#prep_data.train_test_split" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">prep_data.</code><code class="descname">train_test_split</code><span class="sig-paren">(</span><em>df</em>, <em>features</em>, <em>LABEL</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_data.html#train_test_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_data.train_test_split" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function splits the dataframe to random testing and training set with 75% and 25%each.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -388,7 +351,7 @@ y_test: This is the returned testing label</p>
 <p>&#64;author: kevinhsu</p>
 <dl class="function">
 <dt id="rfc_build.confusion_matrix">
-<code class="descclassname">rfc_build.</code><code class="descname">confusion_matrix</code><span class="sig-paren">(</span><em>y</em>, <em>pred</em>, <em>plot=False</em><span class="sig-paren">)</span><a class="headerlink" href="#rfc_build.confusion_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">rfc_build.</code><code class="descname">confusion_matrix</code><span class="sig-paren">(</span><em>y</em>, <em>pred</em>, <em>plot=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rfc_build.html#confusion_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rfc_build.confusion_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function generates the confusion matrix of the prediction, Enable plot to generate the figure</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -410,7 +373,7 @@ y_test: This is the returned testing label</p>
 
 <dl class="function">
 <dt id="rfc_build.load_model">
-<code class="descclassname">rfc_build.</code><code class="descname">load_model</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#rfc_build.load_model" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">rfc_build.</code><code class="descname">load_model</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rfc_build.html#load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rfc_build.load_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function loads the saved model in the current directory</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -426,7 +389,7 @@ y_test: This is the returned testing label</p>
 
 <dl class="function">
 <dt id="rfc_build.rfc_model">
-<code class="descclassname">rfc_build.</code><code class="descname">rfc_model</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>label</em><span class="sig-paren">)</span><a class="headerlink" href="#rfc_build.rfc_model" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">rfc_build.</code><code class="descname">rfc_model</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rfc_build.html#rfc_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rfc_build.rfc_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function builds a random forest model and saves the model as .sav in the current directory.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -451,7 +414,7 @@ y_test: This is the returned testing label</p>
 <span id="this-is-an-example"></span><h2>This is an example<a class="headerlink" href="#module-example" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="example.func1">
-<code class="descclassname">example.</code><code class="descname">func1</code><span class="sig-paren">(</span><em>arg1</em>, <em>arg2</em><span class="sig-paren">)</span><a class="headerlink" href="#example.func1" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">example.</code><code class="descname">func1</code><span class="sig-paren">(</span><em>arg1</em>, <em>arg2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/example.html#func1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#example.func1" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function takes two arguments, sets the first to equal the second, then returns the new first argument. Pointless.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -472,7 +435,7 @@ y_test: This is the returned testing label</p>
 
 <dl class="function">
 <dt id="example.func2">
-<code class="descclassname">example.</code><code class="descname">func2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#example.func2" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">example.</code><code class="descname">func2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/example.html#func2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#example.func2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function with no arguments returns None.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -488,26 +451,28 @@ y_test: This is the returned testing label</p>
 </div>
 
 
+                </div>
+              </div>
+
+            </div>
+
+            <div class="clearer"></div>
           </div>
-          
         </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2018, Adrien Allorant, Ruofan Cai, Joseph Frostad, Kevin Hsu, Tianyi Li.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/code.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+        <div class="bottomnav">
+          
+        <p>
+        &#171;&#160;&#160;<a href="demo.html">Huff &amp; Puff &amp; Classify Demo</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
 
-    
+        </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Adrien Allorant, Ruofan Cai, Joseph Frostad, Kevin Hsu, Tianyi Li.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
   </body>
 </html>
