@@ -90,15 +90,28 @@ dependencies:
   - zeromq=4.2.5=h0a44026_1
   - zlib=1.2.11=h1de35cc_3
   - pip:
+    - alabaster==0.7.12
+    - babel==2.6.0
+    - chardet==3.0.4
     - cycler==0.10.0
+    - docutils==0.14
     - fuzzywuzzy==0.17.0
+    - idna==2.7
+    - imagesize==1.1.0
     - kiwisolver==1.0.1
     - matplotlib==3.0.2
+    - nbsphinx==0.3.5
     - nltk==3.4
+    - packaging==18.0
     - pyparsing==2.3.0
     - python-levenshtein==0.12.0
+    - requests==2.20.1
     - seaborn==0.9.0
     - singledispatch==3.4.0.3
+    - snowballstemmer==1.2.1
+    - sphinx==1.8.2
+    - sphinxcontrib-websupport==1.1.0
     - tqdm==4.28.1
+    - urllib3==1.24.1
 prefix: /Users/francescai/miniconda3/envs/hpc
 

@@ -16,6 +16,7 @@ This is a description of this website. This is just a placeholder.
    software_components
    demo
    code
+   sandbox.ipynb
 
 Indices and tables
 ==================
