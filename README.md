@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-#embed status images (aka badges) to show the status of our build
 [![Build Status](https://travis-ci.com/rfcai/hpc-housing-quality.svg?branch=master)](https://travis-ci.com/rfcai/hpc-housing-quality)
-[![Coverage Status](https://coveralls.io/repos/github/jfrostad/hpc-housing-quality/badge.svg?branch=master)](https://coveralls.io/github/jfrostad/hpc-housing-quality?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/rfcai/hpc-housing-quality/badge.svg?branch=master)](https://coveralls.io/github/rfcai/hpc-housing-quality?branch=master)
 
 ## Welcome to GitHub Pages
 
@@ -44,3 +42,4 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 [![Build Status](https://travis-ci.com/rfcai/hpc-housing-quality.svg?branch=master)](https://travis-ci.com/rfcai/hpc-housing-quality)
 [![Coverage Status](https://coveralls.io/repos/github/jfrostad/hpc-housing-quality/badge.svg?branch=master)](https://coveralls.io/github/jfrostad/hpc-housing-quality?branch=master)
 >>>>>>> 618b39e5c165db928fc97804c31d5cb754bdd05f
+>>>>>>> d2d2b8bd54039017dcc0cd051042f4b7a89ba758
