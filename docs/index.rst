@@ -13,6 +13,7 @@ This is a description of this website. This is just a placeholder.
    :caption: Contents:
 
    project
+   software_components
    demo
    code
 
