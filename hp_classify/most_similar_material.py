@@ -8,7 +8,6 @@ def most_similar_material(input_word, vocabulary):
     :param vocabulary: This is a list of the words included in our vocabulary, i.e we know their rank
     :return: most_similar_word: This function returns the most similar word within our list of words.
     """
-
     #import packages
     import nltk
     from nltk.corpus import wordnet as wn
@@ -17,9 +16,7 @@ def most_similar_material(input_word, vocabulary):
     if type(input_word) is not str:
         class TypeException(Exception):
             """Custom exception class.
-
             This exception is raised when the input word is not a string.
-
             """
             pass
 
@@ -60,9 +57,7 @@ def most_similar_material(input_word, vocabulary):
     if synonym is None:
         class NoneException(Exception):
             """Custom exception class.
-
             This exception is raised when there is no synonym found.
-
             """
             pass
 

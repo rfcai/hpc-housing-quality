@@ -5,13 +5,11 @@ def cv_censor_col(df, colname, pct=.2, weight_var=None, reps=5):
     and replaced with NaN, so that they can be predicted in a cross-validation methodology. It returns a list of such
     dfs that is the length of the reps argument.
 
-    :param df (pandas df): This is a pandas df that has columns with garbage values to be removed.
-    :param colname (str): This is a string indicating the name of a column that you want to censor and later predict.
-    :param pct (float): This is a value between 0-1 that indicates the fraction of values you want to censor. Default =
-    20%
-    :param weight_var (str): This is a string indicating the column name is used to weighted the sample. Default = No
-    weight.
-    :param reps (int): This is an integer indicating the number of different training datasets to create. Default = 5x
+    :param df: This is a pandas df that has columns with garbage values to be removed.
+    :param colname: This is a string indicating the name of a column that you want to censor and later predict.
+    :param pct: This is a value between 0-1 that indicates the fraction of values you want to censor. Default = 20%
+    :param weight_var: This is a string indicating the column name is used to weighted the sample. Default = No weight.
+    :param reps: This is an integer indicating the number of different training datasets to create. Default = 5x
 
     :return: df_clean: This function returns a pandas df where the garbage codes have been replaced with NaN.
     """
