@@ -1,3 +1,16 @@
 #do not upload .csv files (will prevent upload of our large dataset)
 *.csv
-*.DS_store
+
+*.DS_Store
+
+*.log
+
+*.pot
+
+*.pyc
+
+*/*/*/__pycache__/
+
+*/*/__pycache__/
+
+*/__pycache__/

@@ -1,3 +1,7 @@
+import timeit
+import numpy as np
+import pandas as pd
+
 #define necessary helper functions
 def clean_text(text):
     """This function is used to clean a selection of text.
@@ -173,3 +177,161 @@ def extract_ranking(df, vars_to_clean):
 
     #output a clean dataset
     return df_out
+
+def load_data(file_name):
+    """This helper function is used to load a dataset from a selected csv file. 
+    It monitors the rumtime of the loading process and also truncates the dataset
+    to six specified columns as the training atrributes. values with 0 within the numbers
+    of roof, wall, floor are filtered out as well as rows containing nan.
+    
+    Args:
+        file_name (.csv): This is the file name of the csv file to load in for processing
+    
+    Returns:
+        df: This function returns a dataframe with specifed columns and no missing data
+    """    
+    #define start time
+    start = timeit.default_timer()
+    
+    df = pd.read_csv(file_name,low_memory=False) 
+    #truncate process if the dataframe to specified columns and remove missing data
+    attr = ['int_year',
+            'housing_roof_num','housing_wall_num','housing_floor_num','iso3']
+
+    df = df[attr]
+    df = df[df['housing_wall_num']!=0]
+    df = df[df['housing_roof_num']!=0] 
+    df = df[df['housing_floor_num']!=0] 
+    df.dropna()
+    
+    #define end time
+    stop = timeit.default_timer()
+    print("Runtime:{:.2f} sec".format(stop - start))
+    
+    return df
+
+
+def cleaning_block(df, word):
+    """
+    This helper function filters out special characters within number columns, 
+    and convert numbers from string to int
+    
+    Args:
+        df (pandas df):This is a dataframe that is read in and munipulated to 
+        clean out special characters '.' and '?' within the number columns and 
+        covert the data type of the numbers from string to integer
+    """ 
+    df.loc[:,'housing_'+word+'_num'] = df.loc[:,'housing_'+word+'_num'].replace('?',None)
+    df.loc[:,'housing_'+word+'_num'] = df.loc[:,'housing_'+word+'_num'].replace('.',None)
+    df.loc[:,'housing_'+word+'_num'] = pd.to_numeric(df.loc[:,'housing_'+word+'_num'])
+    
+def ranking(df, vals):
+    """
+    This helper function ranks number columns by the ten digit,
+    then keeps values within [10,35], cause the values 
+    out of this set is considered as missing values.
+    
+    Args:
+        df (pandas df): This is a dataframe read in be ranked
+        vals: This is a list of category names (eg. roof, wall, floor) 
+        that is specified to be ranked
+    Return:
+        df (pandas df): This function returns a pandas df with the ordinal rank
+        cols added to the read in datafame
+        
+    """
+    for val in vals:
+        cleaning_block(df, val)
+        df = df[(df['housing_'+val+'_num']<=35) & (df['housing_'+val+'_num']>=10)]
+        df.loc[:,val+'_rank'] = (df['housing_'+val+'_num']/10).apply(np.floor)
+        df.loc[df[val+'_rank'] == 0, val+'_rank'] = 0
+        df.loc[df[val+'_rank'] >= 4, val+'_rank'] = 4
+    return df
+
+def extract_features(df, LABEL):
+    """
+    This is a helper function that gives a list of features used for model training
+    
+    Args:
+        df (pandas df): This is a dataframe read in for feature extraction
+        LABEL: This is the label specifed under prediction
+        
+    Return:
+        features : This is a list of features with label(answers) columns dropped
+    """
+    #list features
+    features = list(df)
+    features.remove('housing_'+LABEL+'_num')
+    features.remove(LABEL+'_rank')
+    return features
+
+def shuffle_redistribute(df, LABEL, Redistribute=True):
+    """This helper function greneralizes the distribution of the data set
+    with respect to the three ranks (1,2,3), then it shuffles the data set to 
+    unbias.
+    
+    Args:
+        df (pandas df): This is a dtaframe read in to shuffle and redistribute
+        LABEL: This is the label specifed under prediction
+        Redistribute: set True for data redistribution (default True)
+    Return:
+        df (pandas df): Returns the modified dataframe
+        rank_dist: This is a list of the number of data within each rank(1,2,3)
+    """
+    if Redistribute:
+        #split the dataframe to three subsets grouped by rank 1,2,3,
+        rank1 = df[df[LABEL+'_rank']==1]
+        rank2 = df[df[LABEL+'_rank']==2]
+        rank3 = df[df[LABEL+'_rank']==3]
+        
+        list_for_rank_df = [rank1, rank2, rank3]
+        new_list = []
+        
+        #determine the smallest dataframe grouped by rank 1,2,3
+        base = min(len(rank1),len(rank2),len(rank3))
+        
+        #redistribution procees by dividing the portion based on the smallest dataset
+        for rank in list_for_rank_df:
+            if len(rank) != base:
+                rank.loc[:,'rand_num'] = np.random.uniform(0,1, len(rank)) 
+                rank = rank[rank['rand_num']<= base/len(rank)]
+                rank = rank.drop(columns = 'rand_num')
+            new_list.append(rank)
+        #concat the three sub dataframes
+        df = pd.concat(new_list)
+    # count the total amount of data of each rank 1,2,3
+    rank_dist = df.groupby(LABEL+'_rank').size().tolist()
+    #randomly shuffle the rows of the overall dataframe
+    df = df.sample(frac=1).reset_index(drop=True)
+    return df, rank_dist
+
+def train_test_split(df, features, LABEL):
+    """This function splits the dataframe to random testing and training set 
+    with 75% and 25%each. 
+    
+    Args:
+        df (pandas df): This is the dataframe to be split
+        features: This is the list of splecified features
+        LABEL: This is the label specifed under prediction
+        
+    Return:
+        x_train: This is the returned train dataset
+        x_test: This is the returned test dataset
+        y_train: This is the returned training label
+        y_test: This is the returned testing label
+    """
+    #assign a random float from 0~1 to each row with uniform distribution
+    df['train'] = np.random.uniform(0, 1, len(df)) <= .75
+    #label encoding, map each categorical data to a coresponding number
+    df['iso3'] = pd.factorize(df['iso3'])[0]
+    #detemine trani and test set, True = training set and False = test set
+    train = df[df['train']==True]
+    test = df[df['train']==False]
+    #dataset and feature splitting for training nd testing
+    x_train = train[features]
+    x_test = test[features]
+    y_train = train[LABEL+'_rank'].values.astype(int)
+    y_test = test[LABEL+'_rank'].values.astype(int)
+    return x_train, x_test, y_train, y_test
+    
+    
