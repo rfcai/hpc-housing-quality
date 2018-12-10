@@ -14,9 +14,7 @@ import pandas as pd
 import re
 
 #import custom modules fpr testing
-import sys
-sys.path.append('..')
-import prep.prep_data as prep
+from .. import prep.prep_data as prep
 
 #set globals for tests
 FILEPATH = '../data/housing_data.csv'
@@ -45,7 +43,7 @@ def test_clean_text():
     """This function tests that the clean text function is doing its job.
     """
     #assert that digits are removed
-    assert re_dig.search(prep.clean_text(DIGITS)) == None, "clean_text did not remove the digits from test global." 
+    assert re_dig.search(prep.clean_text(DIGITS)) == None, "clean_text did not remove the digits from test global."
     #assert that punctutation is removed
     assert re_punct.search(prep.clean_text(PUNCT)) == None, "clean_text did not remove the punctuation from test global."
     #assert that excessive whitespace is removed
