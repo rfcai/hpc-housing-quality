@@ -1,18 +1,16 @@
 
-def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75, jupyter=False):
+def fuzzy_cv(cv_list, base_var, rank_dictionary, subset=None, threshold=75):
 
     #import packages
     from fuzzywuzzy import fuzz
     from fuzzywuzzy import process
     import pandas as pd
     import numpy as np
-
-    if jupyter == True:
-        from tqdm import tqdm_notebook as tqdm
-    else:
-        from tqdm import tqdm
-
+    from tqdm import tqdm_notebook as tqdm
+    
     #import custom modules
+    import sys
+    sys.path.append('../hp_classify')
     import model.fuzzy as fz
     
     #setup objects
@@ -38,14 +36,19 @@ def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75, jupyter=False):
         #build corpus of known and unknown strings
         str_list, idk_strings = fz.build_corpus(df, base_var, rank_var, rank_values)
         
+        #subset the unknown strings to allow for faster testing
+        if subset != None:
+            idk_strings = idk_strings[subset]
+        
         #find distribution of scores for each string
-        distrib = fz.fuzzy_scan(idk_strings[1:4], str_list)
+        distrib = fz.fuzzy_scan(idk_strings, str_list)
         
         #TODO, output plots of distribution for analysis
 
+        
         #predict class based on probability of exceeding similarity cutoff
-        preds = fuzzy_predict(distrib, rank_keys, 'word', threshold,
-                                var_dictionary)
+        preds = fz.fuzzy_predict(distrib, rank_keys, 'word', threshold,
+                                 rank_dictionary)
 
         #merge results back on the test data to validate
         out = df[df['train']==0]
@@ -66,3 +69,14 @@ def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75, jupyter=False):
         cv_df.append(out)
         
     return(cv_distrib, cv_preds, cv_results, cv_df)
+
+
+def save_results_df(df, out_dir, out_name):
+    
+    out_path = f'{out_dir}//{out_name}.csv'    
+    print('saving df to', out_path)
+    
+    df = pd.concat(df)
+    df.to_csv(out_path, header=False, sep=';')
+    
+    return(out_path)
