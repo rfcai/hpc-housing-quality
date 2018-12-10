@@ -6,7 +6,11 @@ def fuzzy_cv(cv_list, base_var, rank_dictionary, subset=None, threshold=75):
     from fuzzywuzzy import process
     import pandas as pd
     import numpy as np
-    from tqdm import tqdm_notebook as tqdm
+    
+    if jupyter == True:
+        from tqdm import tqdm_notebook as tqdm
+    else: 
+        from tqdm import tqdm as tqdm
     
     #import custom modules
     import sys
