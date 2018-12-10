@@ -1,5 +1,5 @@
 
-def fuzzy_cv(cv_list, base_var, rank_dictionary, subset=None, threshold=75):
+def fuzzy_cv(cv_list, base_var, rank_dictionary, subset=None, threshold=75, jupyter=False):
 
     #import packages
     from fuzzywuzzy import fuzz
