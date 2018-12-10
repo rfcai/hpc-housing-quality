@@ -15,7 +15,7 @@ import re
 
 #import custom modules fpr testing
 import sys
-sys.path.append('../hp_classify')
+sys.path.append('..')
 import prep.prep_data as prep
 
 #set globals for tests
