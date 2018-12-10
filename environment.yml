@@ -70,6 +70,8 @@ dependencies:
   - qt=5.9.6=h45cd832_2
   - qtconsole=4.4.2=py37_0
   - readline=7.0=h1de35cc_5
+  - scikit-learn=0.20.1=py37h4f467ca_0
+  - scipy=1.1.0=py37h28f7352_1
   - send2trash=1.5.0=py37_0
   - setuptools=40.6.2=py37_0
   - sip=4.19.8=py37h0a44026_0
@@ -95,7 +97,6 @@ dependencies:
     - nltk==3.4
     - pyparsing==2.3.0
     - python-levenshtein==0.12.0
-    - scipy==1.1.0
     - seaborn==0.9.0
     - singledispatch==3.4.0.3
     - tqdm==4.28.1
