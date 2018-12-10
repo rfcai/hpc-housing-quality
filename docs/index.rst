@@ -6,7 +6,8 @@
 Welcome to Huff & Puff & Classify's documentation!
 ==================================================
 
-This is a description of this website. This is just a placeholder.
+`Demo <http://nbviewer.jupyter.org/github/rfcai/hpc-housing-quality/blob/master/hp_classify/sandbox.ipynb>`_
+
 
 .. toctree::
    :maxdepth: 2
@@ -14,9 +15,7 @@ This is a description of this website. This is just a placeholder.
 
    project
    software_components
-   demo
    code
-   sandbox.ipynb
 
 Indices and tables
 ==================
