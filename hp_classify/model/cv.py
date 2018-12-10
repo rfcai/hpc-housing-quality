@@ -30,7 +30,7 @@ def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75, jupyter=False):
     cv_df = []
     
     #loop over each cross validation:
-    for i in tqdm(range(len(cv_list), desc="cv loop"):
+    for i in tqdm(range(len(cv_list)), desc="cv loop"):
         
         print('working on cv loop #', i)
         df = cv_list[i].copy() #subset the cv list to the current df
