@@ -4,10 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to Huff & Puff & Classify's documentation!
-==================================================
-
-`Demo <http://nbviewer.jupyter.org/github/rfcai/hpc-housing-quality/blob/master/hp_classify/sandbox.ipynb>`_
-
+=========================================================================================================================================================================
 
 .. toctree::
    :maxdepth: 2
@@ -16,6 +13,8 @@ Welcome to Huff & Puff & Classify's documentation!
    project
    software_components
    code
+   demo
+   environment
 
 Indices and tables
 ==================

@@ -1,9 +1,10 @@
-Huff & Puff & Classify Demo
-===========================
+Demo
+=====
 
-This is a short description about how to use this software.
-`some link text <../../../examples/example_rfc.ipynb>`_
+`Fuzzy String Classification <http://nbviewer.jupyter.org/github/jfrostad/hpc-housing-quality/blob/master/examples/example_fuzzy.ipynb>`_
+-------------------------------------------------------------------------------------------------------------------------------------------
+This is a description of what it does.
 
-using a relative path to the local file: link_.
-
-.. _link: ../../../hp_classify/sandbox.ipynb
+`Random Forest Classifier <http://nbviewer.jupyter.org/github/jfrostad/hpc-housing-quality/blob/master/examples/example_rfc.ipynb>`_
+---------------------------------------------------------------------------------------------------------------------------------------
+This is a description of what the Random Forest Classifier does.
