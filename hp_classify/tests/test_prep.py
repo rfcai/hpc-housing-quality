@@ -1,5 +1,5 @@
 #write tests
-"""This is a module used to test a module: "prep.py" and its relevant functions read_then_clean and clean_text
+"""This is a module used to test a module: "prep.py" and its main functions read_then_clean and clean_text
 
 read_then_clean is a function that takes a csv with messy string values and 
 creates then cleans a pandas df
@@ -14,6 +14,8 @@ import pandas as pd
 import re
 
 #import custom modules fpr testing
+import sys
+sys.path.append('../hp_classify')
 import prep.prep_data as prep
 
 #set globals for tests
