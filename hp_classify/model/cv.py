@@ -1,12 +1,16 @@
 
-def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75):
+def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75, jupyter=False):
 
     #import packages
     from fuzzywuzzy import fuzz
     from fuzzywuzzy import process
     import pandas as pd
     import numpy as np
-    from tqdm import tqdm_notebook
+
+    if jupyter == True:
+        from tqdm import tqdm_notebook as tqdm
+    else:
+        from tqdm import tqdm
 
     #import custom modules
     import model.fuzzy as fz
@@ -26,7 +30,7 @@ def fuzzy_cv(cv_list, base_var, rank_dictionary, threshold=75):
     cv_df = []
     
     #loop over each cross validation:
-    for i in tqdm_notebook(range(len(cv_list), desc="cv loop"):
+    for i in tqdm(range(len(cv_list), desc="cv loop"):
         
         print('working on cv loop #', i)
         df = cv_list[i].copy() #subset the cv list to the current df
