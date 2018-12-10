@@ -13,9 +13,7 @@ def clean_text(text):
     digits, and
     extra whitespace.
     TODO: Add functionality to impute a selected value for NaN or missing values?
-
     :param text: This is a text value that needs to be cleaned.
-
     :return: text: This function returns a cleaned version of the input text.
     """
     # import necessary modules
