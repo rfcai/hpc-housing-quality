@@ -23,7 +23,7 @@ def filter_one_word_materials(df, base_var):
         """
         pass
 
-    if 1 not in df_one_word.sum():
+    if 1 not in df['count_word'].unique():
         raise NoOneWordException("No material with only one word!")
 
     subset = df[df.count_word == 1]
