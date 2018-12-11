@@ -24,12 +24,18 @@ sys.path.append('.')
 import prep.prep_data as prep
 
 #set globals for tests
-FILEPATH = '../data/example_data.csv'
+#set globals for tests
+FILEPATH = '../data/housing_data.csv'
 CLEAN_COLS = ['housing_roof', 'housing_wall', 'housing_floor']
 
 DIGITS = str([str(x) for x in range(100 + 1)])
 PUNCT = '!"\'#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n'
 SPACE = '     '
+
+# if you compile the regex string first, it's even faster
+re_dig = re.compile('\d')
+re_punct = re.compile('\W+')
+re_white = re.compile(' +')
 
 STR_VARS = ['housing_roof', 'housing_wall', 'housing_floor']
 NUM_VARS = [s + '_num' for s in STR_VARS]
@@ -38,10 +44,15 @@ RANK_VARS = [s + '_rank' for s in STR_VARS]
 STR_GARBAGE = ['nan', 'other', 'not a dejure resident', 'not dejure resident']
 RANK_GARBAGE = ['4', '5', '6', '7', '8', '9', 'n']
 
-# if you compile the regex string first, it's even faster
-re_dig = re.compile('\d')
-re_punct = re.compile('\W+')
-re_white = re.compile(' +')
+#read in the df using our function in order to pass to later tests
+#read in df using your function and then using pandas regular csv read, then compare the resulting dfs
+df = prep.read_then_clean(FILEPATH, CLEAN_COLS)
+raw_csv = pd.read_csv(FILEPATH)
+
+#also passed it through the rest of the cleaning pipeline on order to compare df to df_clean
+df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
+df_clean = prep.extract_ranking(df_clean, NUM_VARS)
+df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
 
 def test_globals():
     """This function tests that the test globals are properly defined.
@@ -64,25 +75,9 @@ def test_clean_text():
     #assert that excessive whitespace is removed
     assert re_white.search(prep.clean_text(SPACE)) == None, "clean_text did not remove the whitespace from test global."
 
-# This is our base dataset and it needs to be cleaned properly. The second argument specifies
-# the cols with string values that we want to be cleaned.
-
-
-#TODO, this test is for multiple functions. I think it is probably bad practice to test multiple functions in one,
-#but it takes so long to read in the df and clean it that it seems to me more efficient to use a single shot.
 def test_read_then_clean():
-    """This function tests that a custom exception called RowCountException
-    will be returned when more than 1k rows are expected.
-    """
-    #read in df using your function and then using pandas regular csv read, then compare the resulting dfs
-    df = prep.read_then_clean(FILEPATH, CLEAN_COLS)
-    raw_csv = pd.read_csv(FILEPATH)
-    
-    #also passed it through the rest of the cleaning pipeline on order to compare df to df_clean
-    df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
-    df_clean = prep.extract_ranking(df_clean, NUM_VARS)
-    df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
-    
+    """This function tests our master function and the subsquent data cleaning pipeline.
+    """    
     #assert that our function did not add or remove rows
     assert len(raw_csv) == len(df), "read_then_clean function is modifying the original csv's length"
     assert len(df.columns) == len(raw_csv.columns), "read_then_clean function is modifying the original csv's width"
@@ -91,7 +86,11 @@ def test_read_then_clean():
     #TODO: this test will fail if the columns were entirely clean to begin with (is this possible?)
     for x in CLEAN_COLS:
         assert (set(df[x].unique()) == set(raw_csv[x].unique())) == False, "string columns are unmodified"
-        
+
+def test_cleaning_pipeline():
+    """This function tests our cleaning pipeline to make sure that 
+    garbage values are removed and ranks are create
+    """ 
     #assert that rankings were generated in the next step of the pipeline
     for x in RANK_VARS:
         #verify that it wasnt originally present in df
