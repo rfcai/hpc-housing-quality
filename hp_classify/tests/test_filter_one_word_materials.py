@@ -53,6 +53,8 @@ def test_expected_number_of_rows():
 def test_raise_error_if_no_material_with_one_word():
     """Does the function raise an error if there is no material described with one word in the corpus?"""
 
-    with pytest.raises(sem.NoOneWordException):
+    with pytest.raises(Exception) as err:
         test_df = df_clean[0:2]
         sem.filter_one_word_materials(test_df, DEP_VAR)
+
+    assert 'NoOneWordException' in str(err)#verify that your custom error is returned
