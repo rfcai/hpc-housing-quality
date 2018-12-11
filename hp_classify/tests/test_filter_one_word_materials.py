@@ -15,7 +15,7 @@ import model.semantic as sem
 CWD = os.getcwd()
 HOME_DIR = os.path.abspath(os.path.join(CWD, os.pardir))
 DATA_DIR = HOME_DIR + "/data"
-DATA_FILENAME = "housing_data.csv"
+DATA_FILENAME = "example_data.csv"
 RESULTS_DIR = HOME_DIR + "/results"
 
 #setup lists of vars to work with
@@ -57,4 +57,4 @@ def test_raise_error_if_no_material_with_one_word():
         test_df = df_clean[0:2]
         sem.filter_one_word_materials(test_df, DEP_VAR)
 
-    assert 'NoOneWordException' in str(err)#verify that your custom error is returned
+    assert 'NoOneWordException' in str(err) #verify that your custom error was returned
