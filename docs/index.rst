@@ -5,6 +5,7 @@
 
 Welcome to Huff & Puff & Classify's documentation!
 =========================================================================================================================================================================
+Clone/Download `GitHub repository <https://github.com/jfrostad/hpc-housing-quality.git>`_
 
 .. toctree::
    :maxdepth: 2
