@@ -74,10 +74,30 @@ def test_build_corpus():
 
                 assert (z in df_clean[df_clean[rank_var] == rank][x].unique()) == True
     
-def test_fuzzy_scan():
-    
-    #build a corpus based on the 'housing_roof' variable
-    str_list, idk_strings = fz.build_corpus(df_clean, 'housing_roof', 'housing_roof'+"_rank", RANK_LIST)
-    
+def test_fuzzy():
+"""This function tests a series function that are used to predict the unknown ranking of string values using a 
+training dataset in which the rankings are known for other string values. Corpora for each ranking are compiled and
+then the unknown values are compared against these in order to predict the most likely ranking.
+"""
+    #build a fake dataset from which to generate a distribution with expected results
+    df_sim = pd.DataFrame({ 'piggy' : pd.Series(['straw', 'straws', 'stick', 'sticks', 'brick', 'bricks', 'brickz']),
+                            'piggy_rank' : [1, 1, 2, 2, 3, 3, np.nan],
+                            'piggy_rank_og' : [1, 1, 2, 2, 3, 3, 3]})
+    sim_rank_list = [1,2,3] #save a list with the expected rank levels in your simulated df
+
+    #build a corpus based on the simulated dataset
+    str_list, idk_strings = fz.build_corpus(df_sim, 'piggy', 'piggy_rank', sim_rank_list)
+
+    assert len(idk_strings) == 1
+
     #find distribution of scores for each string
-    #distrib = fz.fuzzy_scan(idk_strings, str_list)
+    distrib = fz.fuzzy_scan(idk_strings, str_list)
+
+    #the length of the output df should be equal to the length of the longest corpora
+    assert len(distrib) == len(max(str_list, key=len)), "the output distribution df is not the correct length"
+
+    #the output df should have the a# of columns that equals # of input rank categories + 1
+    assert len(distrib.columns) == len(piggy_rank_list)+1, "the output distribution df is not the correct width"
+
+    #the output df should have a column called word that contains only the values in idk_strings
+    assert distrib.word.unique() in idk_strings
