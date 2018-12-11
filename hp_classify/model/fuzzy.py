@@ -76,14 +76,8 @@ def fuzzy_scan(unknown_list, corpus_list, jupyter=False):
 
             scores = [] #initialize list to store loop vals
 
-<<<<<<< HEAD
             # loop over each word and compute the similarity score using fuzzywuzzy
             for z in range(len(corpus)):
-=======
-            scores = []
-            #loop over each word and compute the similarity score
-            for z in range(len(corpus)): #tqdm=progress bar
->>>>>>> last progress on semantic similarity
                 scores.append(fuzz.WRatio(unknown_str, corpus[z]))
 
             out.append(scores) # append scores to create a distribution for the entire corpus
@@ -102,21 +96,10 @@ def fuzzy_scan(unknown_list, corpus_list, jupyter=False):
 
 
 def fuzzy_predict(df, var_list, grouping, cutoff, dictionary):
-<<<<<<< HEAD
     """This is a helper function for this module. It is used to predict the most likely ranking level for a given string
     based on the distribution of its similarity scores against each corpus from each ranking level. The cutoff level is
     used to determine which rank to predict, as the prediction will be based on which ranking level has the highest
     probability (number of instances > cutoff / total number) of being above the cutoff.
-=======
-    
-    #calculate the probability that a classification score exceeds cutoff
-    ret = df.groupby(grouping)[var_list].apply(lambda c: (c>cutoff).sum()/len(c))
-    
-    #return column w/ max value and map to rank with dictionary
-    ret['pred'] = ret[var_list].idxmax(axis=1).map(dictionary) 
-    
-    return(ret)
->>>>>>> last progress on semantic similarity
 
     TODO: ?
 
@@ -163,24 +146,14 @@ def fuzzy_density(df, facet, var_list, color_list, variant="", cutoff=None):
 
     for var in var_list:
         ('plotting...', var)
-<<<<<<< HEAD
         #create a density plot using seaborn with the specified color mapping
         g = g.map(sns.kdeplot, var + variant, shade=True, color=color_list[var])
 
         # add cutoff line if provided
-=======
-        g = g.map(sns.kdeplot, var+variant, shade=True, color=color_list[var])
-        #add cutoff line if provided
->>>>>>> last progress on semantic similarity
         if cutoff != None:
             g = g.map(plt.axvline, x=cutoff, color='grey', linestyle='dashed')
 
     #add the legend for colors
     g = g.add_legend()
-<<<<<<< HEAD
 
     return (g)
-=======
-    
-    return(g)
->>>>>>> last progress on semantic similarity
