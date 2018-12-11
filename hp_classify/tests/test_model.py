@@ -99,14 +99,14 @@ def test_build_corpus():
 
         # verify that each of the unknown strings exist in the appropriate column in the input pandas df
         for y in idk_strings:
-            assert (y in df_clean[x].unique()) == True
+            assert y in df_clean[x].unique()
 
         # verify that each of the known strings exist in the appropriate column in the input pandas df
         # note that here we subset the pandas df to the correct rank before testing the column values
         for rank, rank_num in zip(RANK_LIST, range(len(RANK_LIST))):
             for z in np.random.choice(str_list[rank_num], 5):  # only pull 5 random strings and test for speed purposes
 
-                assert (z in df_clean[df_clean[rank_var] == rank][x].unique()) == True
+                assert z in df_clean[df_clean[rank_var] == rank][x].unique()
 
 
 def test_sim_fuzzy_corpus():
