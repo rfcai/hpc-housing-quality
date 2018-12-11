@@ -18,7 +18,6 @@ sys.path.insert(0, os.path.abspath('../hp_classify'))
 sys.path.insert(0, os.path.abspath('../hp_classify/model'))
 sys.path.insert(0, os.path.abspath('../hp_classify/prep'))
 sys.path.insert(0, os.path.abspath('../hp_classify/semantic'))
-sys.path.insert(0, os.path.abspath('../docs'))
 
 # -- Project information -----------------------------------------------------
 
