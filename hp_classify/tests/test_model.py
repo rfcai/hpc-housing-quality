@@ -8,17 +8,22 @@ specified rows and columns of the pandas df they were pulled from.
 
 fuzzy_scan is a function that takes an unknown word and scans it for similarity against a list of known words that
 subdivided by class. A distribution of values is returned that can be used to predict which class is most probable
-for the unknown word. Here, several aspects of this functionality are tested, including xxx
+for the unknown word. Here, several aspects of this functionality are tested, including whether it returns a df that is
+the expect size and shape.
 
 fuzzy_predict is a function that takes a distribution of values for each class and predicts which class an unknown
-word is most likely to be based on a given similarity threshold. Here, this function is tested by yyy
+word is most likely to be based on a given similarity threshold. Here, this function is tested by checking the size and
+shape of the df that it returns and also testing whether or not it can accurately predict on a dummy dataset.
+
+The the latter two functions is tested by constructing a simulated dataframe in which we expect the prediction to be 100%
+accurate. We will follow this dataframe through each function in the fuzzy modelling pipeline and then test to
+assert that all behaviour is as expected.
 
 
 """
 # import packages
 import pytest
 import pandas as pd
-import re
 import numpy as np
 
 # import custom modules fpr testing
@@ -51,10 +56,37 @@ df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
 df_clean = prep.extract_ranking(df_clean, NUM_VARS)
 df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
 
+# also simulate a dataframe with predictions we can expect and run it through the model pipeline to test results
+df_sim = pd.DataFrame({'piggy': pd.Series(['straw', 'straws', 'stick', 'sticks', 'brick', 'bricks', 'brickz']),
+                           'piggy_rank': [1, 1, 2, 2, 3, 3, np.nan],
+                           'piggy_rank_og': [1, 1, 2, 2, 3, 3, 3],
+                           'train': [1, 1, 1, 1, 1, 1, 0]})
+sim_rank_list = [1, 2, 3]  # save a list with the expected rank levels in your simulated df
+rank_dictionary = {'natural': 1, 'rudimentary': 2, 'finished': 3}
+rank_values = list(rank_dictionary.values())
+rank_keys = list(rank_dictionary.keys())
+
+# build a corpus based on the simulated dataset
+sim_str_list, sim_idk_strings = fz.build_corpus(df_sim, 'piggy', 'piggy_rank', sim_rank_list)
+
+# find distribution of scores for each string
+sim_distrib = fz.fuzzy_scan(sim_idk_strings, sim_str_list)
+
+# predict class based on probability of exceeding similarity cutoff of 75
+sim_preds = fz.fuzzy_predict(sim_distrib, rank_keys, 'word', 75, rank_dictionary)
+
+# merge results back on the test data to validate
+sim_out = df_sim[df_sim['train'] == 0]
+sim_out = pd.merge(sim_out,
+                   sim_preds,
+                   left_on='piggy',
+                   right_on='word',
+                   how='left')
+
 
 def test_build_corpus():
     """This function tests a function that is used to build corpora of known and unknown words from a df
-    that contains columns with string value descriptions. The testing is done to confirm that the resulting corpuses are built
+    that contains columns with string value descriptions. The testing is done to confirm that the resulting corpora are built
     entirely from words that are present in the pandas df column that was passed in, and furthermore in the rows that result when
     subsetting by the rank class that they are supposed to be a part of.
     """
@@ -77,60 +109,48 @@ def test_build_corpus():
                 assert (z in df_clean[df_clean[rank_var] == rank][x].unique()) == True
 
 
-def test_fuzzy():
-    """This function tests a series function that are used to predict the unknown ranking of string values using a
-    training dataset in which the rankings are known for other string values. Corpora for each ranking are compiled and
-    then the unknown values are compared against these in order to predict the most likely ranking.
-
-    This functionality is tested by constructing a simulated dataframe in which we expect the predictions to be 100%
-    accurate. We will follow this dataframe through each function in the fuzzy modelling pipeline and then test to
-    assert that all behaviour is as expected.
+def test_sim_fuzzy_corpus():
+    """This function tests the build_corpus function from our fuzzy module by making sure that it returns an expected
+    number of unknown words from our simulated df and also that it returns the expected corpora for each known rank
+    grouping.
     """
-    df_sim = pd.DataFrame({'piggy': pd.Series(['straw', 'straws', 'stick', 'sticks', 'brick', 'bricks', 'brickz']),
-                           'piggy_rank': [1, 1, 2, 2, 3, 3, np.nan],
-                           'piggy_rank_og': [1, 1, 2, 2, 3, 3, 3],
-                           'train': [1, 1, 1, 1, 1, 1, 0]})
-    sim_rank_list = [1, 2, 3]  # save a list with the expected rank levels in your simulated df
-    rank_dictionary = {'natural': 1, 'rudimentary': 2, 'finished': 3}
-    rank_values = list(rank_dictionary.values())
-    rank_keys = list(rank_dictionary.keys())
 
-    # build a corpus based on the simulated dataset
-    str_list, idk_strings = fz.build_corpus(df_sim, 'piggy', 'piggy_rank', sim_rank_list)
+    # there should only be one unknown word in the simulated df
+    assert len(sim_idk_strings) == 1, "the simulated df only has one unknown word!"
 
-    assert len(idk_strings) == 1
+    # each rank in the simulated df has two words
+    for x in range(len(sim_str_list)):
+        assert len(sim_str_list[x]) == 2, "each class of simulated df can only have two known words in the corpus"
 
-    # find distribution of scores for each string
-    distrib = fz.fuzzy_scan(idk_strings, str_list)
+def test_sim_fuzzy_distrib():
+    """This function tests the fuzzy_distrib function from our fuzzy module by making sure that it returns output that
+    is the expected length and shape. ALso tested is the functionality that the words being analayzed in the output
+    dataframe are present in the input list of unknown strings.
+    """
 
     # the length of the output df should be equal to the length of the longest corpora
-    assert len(distrib) == len(max(str_list, key=len)), "the output distribution df is not the correct length"
+    assert len(sim_distrib) == len(max(sim_str_list, key=len)), "the output distribution df is not the correct length"
 
     # the output df should have the a# of columns that equals # of input rank categories + 1
-    assert len(distrib.columns) == len(sim_rank_list) + 1, "the output distribution df is not the correct width"
+    assert len(sim_distrib.columns) == len(sim_rank_list) + 1, "the output distribution df is not the correct width"
 
     # the output df should have a column called word that contains only the values in idk_strings
-    assert distrib.word.unique() in idk_strings
+    assert sim_distrib.word.unique() in sim_idk_strings, "the output distribution should only analyze words in idk_strings"
 
-    # predict class based on probability of exceeding similarity cutoff of 75
-    preds = fz.fuzzy_predict(distrib, rank_keys, 'word', 75, rank_dictionary)
+def test_sim_fuzzy_pred():
+    """This function tests the fuzzy_pred function from our fuzzy module by making sure that it returns output that
+    is the expected length and shape. ALso tested is the functionality that the column of predictions has been generated
+    and that the output was 100% accurate as we should expect from the construction of our simulated df.
+    """
 
     # the length of the prediction df should be equal to the length of the unknown words corpus
-    assert len(preds) == len(idk_strings), "the output prediction df is not the correct length"
+    assert len(sim_preds) == len(sim_idk_strings), "the output prediction df is not the correct length"
 
     # the prediction df should have # of columns that equals # of input rank categories + 1
-    assert len(preds.columns) == len(sim_rank_list) + 1, "the output prediction df is not the correct width"
+    assert len(sim_preds.columns) == len(sim_rank_list) + 1, "the output prediction df is not the correct width"
 
     # the prediction df should contain a column called "pred"
-    assert ("pred" in preds.columns), "prediction column not being generated"
-
-    # merge results back on the test data to validate
-    out = df_sim[df_sim['train'] == 0]
-    out = pd.merge(out,
-                   preds,
-                   left_on='piggy',
-                   right_on='word',
-                   how='left')
+    assert ("pred" in sim_preds.columns), "prediction column not being generated"
 
     # assert that the prediction was accurate, as expected
-    assert np.allclose(out['piggy_rank_og'], out['pred'])
+    assert np.allclose(sim_out['piggy_rank_og'], sim_out['pred'])
