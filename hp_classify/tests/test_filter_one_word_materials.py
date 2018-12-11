@@ -4,6 +4,7 @@
 # import packages
 
 #import custom modules fpr testing
+import os
 import sys
 sys.path.append('.')
 import prep.prep_data as prep
