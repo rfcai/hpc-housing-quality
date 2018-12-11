@@ -1,7 +1,7 @@
 Demo
 =====
 
-`Fuzzy String Classification <http://nbviewer.jupyter.org/github/jfrostad/hpc-housing-quality/blob/master/examples/example_fuzzy.ipynb>`_
+`Fuzzy String Classification <http://nbviewer.jupyter.org/github/jfrostad/hpc-housing-quality/blob/develop/examples/example_fuzzy.ipynb>`_
 -------------------------------------------------------------------------------------------------------------------------------------------
 This classifier is built on `fuzzywuzzy` developed by SeatGeek, which accomplishes fuzzy string matching using Levenshtein distance between words. In this example, three corpora are defined using all known words in each rank class. Then, a comparison is made between a given unknown word and all the words in each corpus. This returns the distribution of similarity scores for each class, which is then used to predict the actual class.
 
