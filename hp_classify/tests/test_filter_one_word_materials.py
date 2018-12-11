@@ -2,22 +2,7 @@
 """This is a module used to test the filter_one_word_materials function
 """
 # import packages
-import pytest
-import pandas as pd
-import re
-import nltk
-import numpy as np
-import os, os.path
 
-
-#import custom modules
-import prep.prep_data as prep
-import prep.prep_cv as cv
-import model.fuzzy as fz
-import semantic.semantic as sem
-
-#magik
-%matplotlib inline
 #import custom modules fpr testing
 import sys
 sys.path.append('.')

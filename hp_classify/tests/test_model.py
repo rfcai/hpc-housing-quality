@@ -51,11 +51,11 @@ df_clean = prep.extract_ranking(df_clean, NUM_VARS)
 df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
 
 def test_build_corpus():
-    """This function tests a function that is used to build corpora of known and unknown words from a df 
+    """This function tests a function that is used to build corpora of known and unknown words from a df
     that contains columns with string value descriptions. The testing is done to confirm that the resulting corpuses are built
     entirely from words that are present in the pandas df column that was passed in, and furthermore in the rows that result when
     subsetting by the rank class that they are supposed to be a part of.
-    """  
+    """
     import numpy as np
     
     for x in STR_VARS:
@@ -75,14 +75,14 @@ def test_build_corpus():
                 assert (z in df_clean[df_clean[rank_var] == rank][x].unique()) == True
     
 def test_fuzzy():
-"""This function tests a series function that are used to predict the unknown ranking of string values using a 
-training dataset in which the rankings are known for other string values. Corpora for each ranking are compiled and
-then the unknown values are compared against these in order to predict the most likely ranking.
+    """This function tests a series function that are used to predict the unknown ranking of string values using a
+    training dataset in which the rankings are known for other string values. Corpora for each ranking are compiled and
+    then the unknown values are compared against these in order to predict the most likely ranking.
 
-This functionality is tested by constructing a simulated dataframe in which we expect the predictions to be 100%
-accurate. We will follow this dataframe through each function in the fuzzy modelling pipeline and then test to 
-assert that all behaviour is as expected.
-"""
+    This functionality is tested by constructing a simulated dataframe in which we expect the predictions to be 100%
+    accurate. We will follow this dataframe through each function in the fuzzy modelling pipeline and then test to
+    assert that all behaviour is as expected.
+    """
     df_sim = pd.DataFrame({ 'piggy' : pd.Series(['straw', 'straws', 'stick', 'sticks', 'brick', 'bricks', 'brickz']),
                             'piggy_rank' : [1, 1, 2, 2, 3, 3, np.nan],
                             'piggy_rank_og' : [1, 1, 2, 2, 3, 3, 3],
