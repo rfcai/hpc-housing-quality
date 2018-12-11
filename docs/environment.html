@@ -7,45 +7,39 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Search &#8212; Huff &amp; Puff &amp; Classify  documentation</title>
+    <title>Environment for Huff &amp; Puff &amp; Classify &#8212; Huff &amp; Puff &amp; Classify  documentation</title>
     <link rel="stylesheet" href="_static/dotted.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/searchtools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" />
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
-   
-
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Demo" href="demo.html" /> 
   </head><body>
         <div class="header">
           <div class="header-top">
             <h1 class="heading"><a href="index.html">
               <span>Huff &amp; Puff &amp; Classify  documentation</span></a></h1>
-            <h2 class="heading"><span>Search</span></a></h2>
+            <h2 class="heading"><span>Environment for Huff &amp; Puff &amp; Classify</span></a></h2>
           </div>
           <div class="topnav">
             
         <p>
+        &#171;&#160;&#160;<a href="demo.html">Demo</a>
+        &#160;&#160;::&#160;&#160;
         <a class="uplink" href="index.html">Contents</a>
         </p>
 
             <div class="globaltoc">
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="project.html">Project Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="software_components.html">Software Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code.html">Code Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="demo.html">Demo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment for Huff &amp; Puff &amp; Classify</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Environment for Huff &amp; Puff &amp; Classify</a></li>
 </ul>
 
             </div>
@@ -58,29 +52,20 @@
               <div class="bodywrapper">
                 <div class="body">
                   
-  <h1 id="search-documentation">Search</h1>
-  <div id="fallback" class="admonition warning">
-  <script type="text/javascript">$('#fallback').hide();</script>
-  <p>
-    Please activate JavaScript to enable the search
-    functionality.
-  </p>
-  </div>
-  <p>
-    From here you can search these documents. Enter your search
-    words into the box below and click "search". Note that the search
-    function will automatically search for all of the words. Pages
-    containing fewer words won't appear in the result list.
-  </p>
-  <form action="" method="get">
-    <input type="text" name="q" value="" />
-    <input type="submit" value="search" />
-    <span id="search-progress" style="padding-left: 10px"></span>
-  </form>
-  
-  <div id="search-results">
-  
-  </div>
+  <div class="section" id="environment-for-huff-puff-classify">
+<h1>Environment for Huff &amp; Puff &amp; Classify<a class="headerlink" href="#environment-for-huff-puff-classify" title="Permalink to this headline">¶</a></h1>
+<p>To run the software, you need to create an environment using the environment.yml file in the Github repository. To do this, follow these steps:</p>
+<ol class="arabic simple">
+<li>After cloning our repository onto your local machine, in your terminal/command window, <cite>cd</cite> in to the directory where <cite>environment.yml</cite> lives</li>
+<li>Optional: <cite>cat environment.yml</cite> to view the environment dependencies. Our environment name is called <cite>hpc</cite>.</li>
+<li>To recreate the environment locally, type <cite>conda env create -f environment.yml</cite></li>
+<li>Now you can activate this environment <cite>conda activate hpc</cite> (only for the first time). After this environment exists locally, you can go ahead and use the <cite>source activate hpc`(for Mac) or `activate hpc</cite> (for Windows) command.</li>
+<li>Open Jupyter after this environment is activated. Now you are able to create a new Jupyter notebook in this environment. i.e. you will see a choice between the  default Python 3 and one in your current environment, e.g. Python [conda env:root].</li>
+<li>If you want to modify the environment, you can <cite>conda</cite> or <cite>pip</cite> installing new packages in your terminal/command window, while this environment (hpc) is active. Save out the modification to replace the old environment.yml file: <cite>conda env export &gt; environment.yml</cite></li>
+<li>To get out of this environment, use <cite>source deactivate hpc</cite> or <cite>deactivate hpc</cite></li>
+</ol>
+</div>
+
 
                 </div>
               </div>
@@ -94,6 +79,8 @@
         <div class="bottomnav">
           
         <p>
+        &#171;&#160;&#160;<a href="demo.html">Demo</a>
+        &#160;&#160;::&#160;&#160;
         <a class="uplink" href="index.html">Contents</a>
         </p>
 
