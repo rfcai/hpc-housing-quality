@@ -4,17 +4,17 @@
    contain the root `toctree` directive.
 
 Welcome to Huff & Puff & Classify's documentation!
-==================================================
-
-This is a description of this website. This is just a placeholder.
+=========================================================================================================================================================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    project
-   demo
+   software_components
    code
+   demo
+   environment
 
 Indices and tables
 ==================
