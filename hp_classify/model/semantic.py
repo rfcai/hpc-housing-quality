@@ -1,13 +1,3 @@
-# define a custom exception for your next function
-class NoOneWordException(Exception):
-    """Custom exception class.
-
-    This exception is raised when the input data does not have any suitable (length=one word) strings to analyze.
-
-    """
-    pass
-
-
 def filter_one_word_materials(df, base_var):
     """This function takes an input dataframe and returns a subset of it, where all materials described with more than one word
     have been filtered out. As we match materials on their semantic similarity, we want to ensure that we only have materials described
@@ -22,6 +12,16 @@ def filter_one_word_materials(df, base_var):
 
     df_one_word = df[base_var].str.get_dummies(sep=' ').T
     df['count_word'] = df_one_word.sum()
+
+    # define a custom exception for your next function
+    # TODO should this be defined inside the function or outside?
+    class NoOneWordException(Exception):
+        """Custom exception class.
+
+        This exception is raised when the input data does not have any suitable (length=one word) strings to analyze.
+
+        """
+        pass
 
     if 1 not in df_one_word.sum():
         raise NoOneWordException("No material with only one word!")
