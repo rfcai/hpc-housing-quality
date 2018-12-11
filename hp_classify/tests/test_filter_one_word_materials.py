@@ -42,21 +42,16 @@ df_clean = prep.extract_ranking(df_clean, NUM_VARS)
 df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
 df_clean = df_clean.dropna(subset=[DEP_VAR])
 
-class FilterOneWordMaterials(unittest.TestCase):
+def test_expected_number_of_rows(self, df_clean):
+    """Has the function successfully filtered out all the materials described with more than one word?"""
 
-    """Tests for `filter_one_word_materials.py`."""
+    df = df_clean[0:20]
+    assert (sem.filter_one_word_materials(df, DEP_VAR).shape[0],
+            sum(df[DEP_VAR].str.get_dummies(sep=' ').T.sum() == 1))
 
+def test_raise_error_if_no_material_with_one_word(df_clean):
+    """Does the function raise an error if there is no material described with one word in the corpus?"""
 
-    def test_expected_number_of_rows(self, df_clean):
-        """Has the function successfully filtered out all the materials described with more than one word?"""
-
-        df = df_clean[0:20]
-        assert (sem.filter_one_word_materials(df, DEP_VAR).shape[0],
-                sum(df[DEP_VAR].str.get_dummies(sep=' ').T.sum() == 1))
-
-    def test_raise_error_if_no_material_with_one_word(df_clean):
-        """Does the function raise an error if there is no material described with one word in the corpus?"""
-
-        with pytest.raises(NoOneWordException):
-            df = df_clean[0:2]
-            sem.filter_one_word_materials(df, DEP_VAR)
+    with pytest.raises(NoOneWordException):
+        df = df_clean[0:2]
+        sem.filter_one_word_materials(df, DEP_VAR)
