@@ -42,14 +42,14 @@ df_clean = prep.extract_ranking(df_clean, NUM_VARS)
 df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
 df_clean = df_clean.dropna(subset=[DEP_VAR])
 
-def test_expected_number_of_rows(df_clean):
+def test_expected_number_of_rows():
     """Has the function successfully filtered out all the materials described with more than one word?"""
 
     df = df_clean[0:20]
     assert (sem.filter_one_word_materials(df, DEP_VAR).shape[0],
             sum(df[DEP_VAR].str.get_dummies(sep=' ').T.sum() == 1))
 
-def test_raise_error_if_no_material_with_one_word(df_clean):
+def test_raise_error_if_no_material_with_one_word():
     """Does the function raise an error if there is no material described with one word in the corpus?"""
 
     with pytest.raises(NoOneWordException):
