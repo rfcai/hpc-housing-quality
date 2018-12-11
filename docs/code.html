@@ -41,8 +41,8 @@
 <li class="toctree-l1"><a class="reference internal" href="project.html">Project Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="software_components.html">Software Components</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Code Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-prep_data">Clean and train data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-prep_cv">Prepare dataset for cross-validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-prep_data">Clean and train data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-most_similar_material">Natural Language Processing: spelling and semantics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-model">Modeling</a></li>
 </ul>
@@ -63,6 +63,35 @@
                   
   <div class="section" id="code-documentation">
 <h1>Code Documentation<a class="headerlink" href="#code-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-prep_cv">
+<span id="prepare-dataset-for-cross-validation"></span><h2>Prepare dataset for cross-validation<a class="headerlink" href="#module-prep_cv" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="prep_cv.cv_censor_col">
+<code class="descclassname">prep_cv.</code><code class="descname">cv_censor_col</code><span class="sig-paren">(</span><em>df</em>, <em>colname</em>, <em>pct=0.2</em>, <em>weight_var=None</em>, <em>reps=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_cv.html#cv_censor_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_cv.cv_censor_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to create pandas dfs where a specified % of the values in a column have been censored
+and replaced with NaN, so that they can be predicted in a cross-validation methodology. It returns a list of such
+dfs that is the length of the reps argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df</strong> – This is a pandas df that has columns with garbage values to be removed.</li>
+<li><strong>colname</strong> – This is a string indicating the name of a column that you want to censor and later predict.</li>
+<li><strong>pct</strong> – This is a value between 0-1 that indicates the fraction of values you want to censor. Default = 20%</li>
+<li><strong>weight_var</strong> – This is a string indicating the column name is used to weighted the sample. Default = No weight.</li>
+<li><strong>reps</strong> – This is an integer indicating the number of different training datasets to create. Default = 5x</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">df_clean: This function returns a pandas df where the garbage codes have been replaced with NaN.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="module-prep_data">
 <span id="clean-and-train-data"></span><h2>Clean and train data<a class="headerlink" href="#module-prep_data" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -286,35 +315,6 @@ rank_dist: This is a list of the number of data within each rank(1,2,3)</p>
 x_test: This is the returned test dataset
 y_train: This is the returned training label
 y_test: This is the returned testing label</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-prep_cv">
-<span id="prepare-dataset-for-cross-validation"></span><h2>Prepare dataset for cross-validation<a class="headerlink" href="#module-prep_cv" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="prep_cv.cv_censor_col">
-<code class="descclassname">prep_cv.</code><code class="descname">cv_censor_col</code><span class="sig-paren">(</span><em>df</em>, <em>colname</em>, <em>pct=0.2</em>, <em>weight_var=None</em>, <em>reps=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prep_cv.html#cv_censor_col"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prep_cv.cv_censor_col" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function is used to create pandas dfs where a specified % of the values in a column have been censored
-and replaced with NaN, so that they can be predicted in a cross-validation methodology. It returns a list of such
-dfs that is the length of the reps argument.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df</strong> – This is a pandas df that has columns with garbage values to be removed.</li>
-<li><strong>colname</strong> – This is a string indicating the name of a column that you want to censor and later predict.</li>
-<li><strong>pct</strong> – This is a value between 0-1 that indicates the fraction of values you want to censor. Default = 20%</li>
-<li><strong>weight_var</strong> – This is a string indicating the column name is used to weighted the sample. Default = No weight.</li>
-<li><strong>reps</strong> – This is an integer indicating the number of different training datasets to create. Default = 5x</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">df_clean: This function returns a pandas df where the garbage codes have been replaced with NaN.</p>
 </td>
 </tr>
 </tbody>

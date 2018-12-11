@@ -1,14 +1,15 @@
 Code Documentation
 ******************
 
-Clean and train data
-====================
-.. automodule:: prep_data
-    :members:
 
 Prepare dataset for cross-validation
 ====================================
 .. automodule:: prep_cv
+    :members:
+
+Clean and train data
+====================
+.. automodule:: prep_data
     :members:
 
 Natural Language Processing: spelling and semantics
