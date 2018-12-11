@@ -30,7 +30,7 @@ def check_if_english(df, base_var):
     :param df: This is a cleaned dataframe containing all the information from the surveys.
     :param base_var: The variable of interest for which some materials are unknown.
 
-     :return english_material: it returns a list of boolean indicating for each row, whether the material in base_var is described
+    :return english_material: it returns a list of boolean indicating for each row, whether the material in base_var is described
      using a word in english.
 
     """
@@ -56,7 +56,7 @@ def semantic_similarity_scan(unknown_list, corpus_list):
     :param corpus_list: This is a list of the strings for which the rank is known. The strings are classified
      within one of three categories of materials.
 
-     :return distrib: The distribution of the similarity scores between each unknown material in the unknown list and known material
+    :return distrib: The distribution of the similarity scores between each unknown material in the unknown list and known material
      in the corpus_list.
 
     """

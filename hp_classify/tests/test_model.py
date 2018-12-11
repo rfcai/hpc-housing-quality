@@ -55,7 +55,8 @@ def test_build_corpus():
     that contains columns with string value descriptions. The testing is done to confirm that the resulting corpuses are built
     entirely from words that are present in the pandas df column that was passed in, and furthermore in the rows that result when
     subsetting by the rank class that they are supposed to be a part of.
-    """  
+    """
+
     import numpy as np
     
     for x in STR_VARS:

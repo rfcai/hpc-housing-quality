@@ -17,7 +17,7 @@ import sys
 sys.path.insert(0, os.path.abspath('../hp_classify'))
 sys.path.insert(0, os.path.abspath('../hp_classify/model'))
 sys.path.insert(0, os.path.abspath('../hp_classify/prep'))
-sys.path.insert(0, os.path.abspath('../hp_classify/RFC'))
+sys.path.insert(0, os.path.abspath('../hp_classify/semantic'))
 
 # -- Project information -----------------------------------------------------
 

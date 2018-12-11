@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>fuzzy &#8212; Huff &amp; Puff &amp; Classify  documentation</title>
+    <link rel="stylesheet" href="../_static/dotted.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+        <div class="header">
+          <div class="header-top">
+            <h1 class="heading"><a href="../index.html">
+              <span>Huff &amp; Puff &amp; Classify  documentation</span></a></h1>
+            <h2 class="heading"><span>fuzzy</span></a></h2>
+          </div>
+          <div class="topnav">
+            
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+            <div class="globaltoc">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../project.html">Project Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software_components.html">Software Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environment.html">Environment and Data Acquisition</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+
+          <div class="document">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <h1>Source code for fuzzy</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="build_corpus"><a class="viewcode-back" href="../code.html#fuzzy.build_corpus">[docs]</a><span></span><span class="k">def</span> <span class="nf">build_corpus</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">str_var</span><span class="p">,</span> <span class="n">rank_var</span><span class="p">,</span> <span class="n">rank_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is a helper function for this module. It is used to build the corpuses that will be used to analyze</span>
+<span class="sd">    word similarity in order to make a prediction for unknown words. It returns a separate corpus for each provided</span>
+<span class="sd">    rank and also a vector of unknown words which currently are not associated with a rank and need to be predicted.</span>
+
+<span class="sd">    TODO: ?</span>
+
+<span class="sd">    :param df: This is a pandas df that has words which are associated with a rank and unknown words.</span>
+<span class="sd">    :param str_var: This is a string indicating the variable you want to analyze the string values of.</span>
+<span class="sd">    :param rank_var: This is a string indicating the variable you want to classify the string_var into ranks by.</span>
+<span class="sd">    :param rank_list: This is a list of the rank categories you want to classify by. rank_var should contain these vals.</span>
+
+<span class="sd">    :return: out: This is a list which length=length(rank_list). Each object in the list is a vector of words (corpus)</span>
+<span class="sd">        that are associated with this rank.</span>
+<span class="sd">    :return: other: This is a vector of unknown words that we will compare against every corpus in out to classify.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># import necessary modules</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="k">import</span> <span class="n">fuzz</span>
+    <span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="k">import</span> <span class="n">process</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#initialize list to store loop vals</span>
+
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">rank_list</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;building corpus for rank #&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">rank_var</span><span class="p">]</span> <span class="o">==</span> <span class="n">x</span><span class="p">][</span><span class="n">str_var</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;extracting unknown strings&quot;</span><span class="p">)</span>
+    <span class="n">other</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="n">rank_var</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">rank_list</span><span class="p">)][</span><span class="n">str_var</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="p">[</span><span class="o">~</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">other</span><span class="p">)]</span>  <span class="c1"># cant classify NaN</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;need to classify&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">),</span> <span class="s2">&quot;unknown strings&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="fuzzy_scan"><a class="viewcode-back" href="../code.html#fuzzy.fuzzy_scan">[docs]</a><span class="k">def</span> <span class="nf">fuzzy_scan</span><span class="p">(</span><span class="n">unknown_list</span><span class="p">,</span> <span class="n">corpus_list</span><span class="p">,</span> <span class="n">jupyter</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is a helper function for this module. It is used to scan each word on the list of unknown words by</span>
+<span class="sd">    comparing it to every word in each corpus in corpus_list. The words are compared using the fuzzywuzzy package and a</span>
+<span class="sd">    similarity score is computed using the Levenshtein distance. For each unknown word, a distribution of similiarity</span>
+<span class="sd">    scores is provided for every known rank. This distribution is later used to predict the most likely rank for the</span>
+<span class="sd">    given word.</span>
+
+<span class="sd">    TODO: ?</span>
+
+<span class="sd">    :param unknown_list: This is a vector of words with an unknown quality ranking that we want to analyze and predict.</span>
+<span class="sd">    :param corpus_list: This is a list of vectors that contain all the words associated with each quality ranking level.</span>
+<span class="sd">    :param jupyter: This is a boolean that tells us if we are running in a jupyter nb. If so, we use a different tqdm</span>
+<span class="sd">        progress bar.</span>
+
+<span class="sd">    :return: distrib: This is a pandas df with all the similarity scores for each unknown word.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># import necessary modules</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="k">import</span> <span class="n">fuzz</span>
+    <span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="k">import</span> <span class="n">process</span>
+
+    <span class="c1">#note that if we are using a jupyter notebook we want to use a different tqdm call as it displays badly otherwise</span>
+    <span class="k">if</span> <span class="n">jupyter</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm_notebook</span> <span class="k">as</span> <span class="n">tqdm</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
+
+    <span class="n">distrib</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#initialize list to store loop vals</span>
+
+    <span class="c1"># loop over each unknown string</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unknown_list</span><span class="p">)),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;classifying unknown strings&quot;</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">unknown_str</span> <span class="o">=</span> <span class="n">unknown_list</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="c1">#subset the list of strings to the current working string</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;analyzing...&#39;</span><span class="p">,</span> <span class="n">unknown_str</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#initialize list to store loop vals</span>
+        <span class="c1"># loop over each corpus to compute similarity scores for all words in a given housing quality score</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus_list</span><span class="p">)):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~&gt;corpus#&#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus_list</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="c1">#subset the list of corpora to the given corpus to compare against unknown word</span>
+
+            <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#initialize list to store loop vals</span>
+
+            <span class="c1"># loop over each word and compute the similarity score using fuzzywuzzy</span>
+            <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)):</span>
+                <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fuzz</span><span class="o">.</span><span class="n">WRatio</span><span class="p">(</span><span class="n">unknown_str</span><span class="p">,</span> <span class="n">corpus</span><span class="p">[</span><span class="n">z</span><span class="p">]))</span>
+
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="c1"># append scores to create a distribution for the entire corpus</span>
+
+        <span class="c1"># append distributions of scores</span>
+        <span class="c1">#TODO: make this call more flexible, currently the colnames are hard coded so this fx will not work for</span>
+        <span class="c1">#other classification exercises</span>
+        <span class="n">distrib</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="n">unknown_str</span><span class="p">,</span>
+                                     <span class="s1">&#39;natural&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                     <span class="s1">&#39;rudimentary&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                                     <span class="s1">&#39;finished&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                                     <span class="c1"># note series method used to overcome differing lengths</span>
+                                     <span class="p">}))</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">distrib</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="fuzzy_predict"><a class="viewcode-back" href="../code.html#fuzzy.fuzzy_predict">[docs]</a><span class="k">def</span> <span class="nf">fuzzy_predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">var_list</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is a helper function for this module. It is used to predict the most likely ranking level for a given string</span>
+<span class="sd">    based on the distribution of its similarity scores against each corpus from each ranking level. The cutoff level is</span>
+<span class="sd">    used to determine which rank to predict, as the prediction will be based on which ranking level has the highest</span>
+<span class="sd">    probability (number of instances &gt; cutoff / total number) of being above the cutoff.</span>
+
+<span class="sd">    TODO: ?</span>
+
+<span class="sd">    :param df: This is the input pandas df of words we wanted to predict for using the words that are known per rank.</span>
+<span class="sd">    :param var_list: This is a list of str column names, each containing the distribution of values for a given rank.</span>
+<span class="sd">    :param grouping: This is a str value that specifies the column name that each distribtuion is grouped by.</span>
+<span class="sd">    :param cutoff: This is the similarity score cutoff we think implies sufficient semantic meaning in word similarity.</span>
+<span class="sd">    :param dictionary: This is a dictionary we can use to transform the column names back into an ordinal rank values.</span>
+
+<span class="sd">    :return: out: This is a pandas df which is a copy of the input df, but has a new column added of predicted rank.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># calculate the probability that a classification score exceeds cutoff</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grouping</span><span class="p">)[</span><span class="n">var_list</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="p">(</span><span class="n">c</span> <span class="o">&gt;</span> <span class="n">cutoff</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+    <span class="c1"># return column w/ max value and map to rank with dictionary</span>
+    <span class="n">out</span><span class="p">[</span><span class="s1">&#39;pred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="n">var_list</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">out</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="fuzzy_density"><a class="viewcode-back" href="../code.html#fuzzy.fuzzy_density">[docs]</a><span class="k">def</span> <span class="nf">fuzzy_density</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">facet</span><span class="p">,</span> <span class="n">var_list</span><span class="p">,</span> <span class="n">color_list</span><span class="p">,</span> <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This is a helper function for this module. It is used to generate density plots showing distributions of scores</span>
+<span class="sd">    for each word, with the colors indicating each different quality ranking. A cutoff argument can be passed to draw a</span>
+<span class="sd">    vertical line on the plot to indicate which probability mass is going to be used to derive the predictions.</span>
+
+<span class="sd">    TODO: ?</span>
+
+<span class="sd">    :param df: This is the input pandas df of score distributions by quality ranking for each unknown word</span>
+<span class="sd">    :param facet: This is a str specifying the column name that we want to facet on for our plots.</span>
+<span class="sd">    :param var_list: This is a list of str column names, each containing the distribution of values for a given rank.</span>
+<span class="sd">    :param color_list: This is a dictionary of color values, defined by the column name for each quality rank.</span>
+<span class="sd">    :param cutoff: This is the similarity score cutoff we think implies sufficient semantic meaning in word similarity.</span>
+<span class="sd">    :param variant: This is an optional parameter that can be used if we transform the score column before plotting.</span>
+
+<span class="sd">    :return: g: This is an object containing the generated plots.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># import necessary modules</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+    <span class="c1">#specify the facet grid structure and the variable to use for the facetting</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">FacetGrid</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">facet</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">:</span>
+        <span class="p">(</span><span class="s1">&#39;plotting...&#39;</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+        <span class="c1">#create a density plot using seaborn with the specified color mapping</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">,</span> <span class="n">var</span> <span class="o">+</span> <span class="n">variant</span><span class="p">,</span> <span class="n">shade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color_list</span><span class="p">[</span><span class="n">var</span><span class="p">])</span>
+
+        <span class="c1"># add cutoff line if provided</span>
+        <span class="k">if</span> <span class="n">cutoff</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">cutoff</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+
+    <span class="c1">#add the legend for colors</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">g</span><span class="p">)</span></div>
+</pre></div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+
+        <div class="bottomnav">
+          
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+        </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Adrien Allorant, Ruofan Cai, Joseph Frostad, Kevin Hsu, Tianyi Li.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

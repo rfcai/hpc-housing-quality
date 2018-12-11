@@ -1,17 +1,12 @@
 def semantic_similarity_scan(unknown_list, corpus_list):
-
     """This function takes a list of materials for which the rank is unknown (i.e. a word outside our "dictionnary")
     as input and calculates a score of semantic similarity with each word of the list of known material (our "dictionnary").
 
-    Args:
-        unknown_list (list of str): This is a list of strings whose rank is unknown
-        corpus_list (list of str): This is a list of the strings for which the rank is known. The strings are classified
+    :param unknown_list: This is a list of strings whose rank is unknown
+    :param corpus_list: This is a list of the strings for which the rank is known. The strings are classified
         within one of three categories of materials.
-
-    Returns:
-        distrib (DataFrame): The distribution of the similarity scores between each unknown material in the unknown list and known material
+    :return: distrib (DataFrame): The distribution of the similarity scores between each unknown material in the unknown list and known material
         in the corpus_list.
-
     """
 
     import pandas as pd
