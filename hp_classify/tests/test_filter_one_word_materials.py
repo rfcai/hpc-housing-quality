@@ -7,7 +7,7 @@
 import sys
 sys.path.append('.')
 import prep.prep_data as prep
-import model.fuzzy as fz
+import model.semantic as sem
 
 #setup directories
 CWD = os.getcwd()
@@ -45,17 +45,17 @@ class FilterOneWordMaterials(unittest.TestCase):
 
     """Tests for `filter_one_word_materials.py`."""
 
+
     def test_expected_number_of_rows(self, df_clean):
         """Has the function successfully filtered out all the materials described with more than one word?"""
 
         df = df_clean[0:20]
-        self.assertTrue(sem.filter_one_word_materials(df, DEP_VAR).shape[0], sum(df[DEP_VAR].str.get_dummies(sep=' ').T.sum() == 1))
+        assert (sem.filter_one_word_materials(df, DEP_VAR).shape[0],
+                sum(df[DEP_VAR].str.get_dummies(sep=' ').T.sum() == 1))
 
-    def test_raise_error_if_no_material_with_one_word(self, df_clean):
+    def test_raise_error_if_no_material_with_one_word(df_clean):
         """Does the function raise an error if there is no material described with one word in the corpus?"""
 
-        df = df_clean[0:2]
-        self.assertRaises(NoOneWordException, sem.filter_one_word_materials)
-
-if __name__ == '__main__':
-    unittest.main()
+        with pytest.raises(NoOneWordException):
+            df = df_clean[0:2]
+            sem.filter_one_word_materials(df, DEP_VAR)
