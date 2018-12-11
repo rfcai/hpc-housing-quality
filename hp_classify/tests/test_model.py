@@ -78,12 +78,19 @@ def test_fuzzy():
 """This function tests a series function that are used to predict the unknown ranking of string values using a 
 training dataset in which the rankings are known for other string values. Corpora for each ranking are compiled and
 then the unknown values are compared against these in order to predict the most likely ranking.
+
+This functionality is tested by constructing a simulated dataframe in which we expect the predictions to be 100%
+accurate. We will follow this dataframe through each function in the fuzzy modelling pipeline and then test to 
+assert that all behaviour is as expected.
 """
-    #build a fake dataset from which to generate a distribution with expected results
     df_sim = pd.DataFrame({ 'piggy' : pd.Series(['straw', 'straws', 'stick', 'sticks', 'brick', 'bricks', 'brickz']),
                             'piggy_rank' : [1, 1, 2, 2, 3, 3, np.nan],
-                            'piggy_rank_og' : [1, 1, 2, 2, 3, 3, 3]})
+                            'piggy_rank_og' : [1, 1, 2, 2, 3, 3, 3],
+                            'train' : [1, 1, 1, 1, 1, 1, 0]})
     sim_rank_list = [1,2,3] #save a list with the expected rank levels in your simulated df
+    rank_dictionary = {'natural':1, 'rudimentary':2, 'finished':3}
+    rank_values = list(rank_dictionary.values())
+    rank_keys = list(rank_dictionary.keys())
 
     #build a corpus based on the simulated dataset
     str_list, idk_strings = fz.build_corpus(df_sim, 'piggy', 'piggy_rank', sim_rank_list)
@@ -101,3 +108,26 @@ then the unknown values are compared against these in order to predict the most 
 
     #the output df should have a column called word that contains only the values in idk_strings
     assert distrib.word.unique() in idk_strings
+
+    #predict class based on probability of exceeding similarity cutoff of 75
+    preds = fz.fuzzy_predict(distrib, rank_keys, 'word', 75, rank_dictionary)
+
+    #the length of the prediction df should be equal to the length of the unknown words corpus
+    assert len(preds) == len(idk_strings), "the output prediction df is not the correct length"
+
+    #the prediction df should have # of columns that equals # of input rank categories + 1
+    assert len(preds.columns) == len(piggy_rank_list)+1, "the output prediction df is not the correct width"
+
+    #the prediction df should contain a column called "pred"
+    assert ("pred" in preds.columns), "prediction column not being generated"
+
+    #merge results back on the test data to validate
+    out = df_sim[df_sim['train']==0]
+    out = pd.merge(out,
+                   preds,
+                   left_on='piggy',
+                   right_on='word',
+                   how='left')
+
+    #assert that the prediction was accurate, as expected
+    assert np.allclose(out['piggy_rank_og'], out['pred'])
