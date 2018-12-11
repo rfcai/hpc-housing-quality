@@ -7,6 +7,11 @@ using clean_text
 
 This module tests that function by ensuring that it returns expected exceptions and
 does not contain unexpected values.
+
+This module also uses the opportunity of having the df loaded to tests the 
+functions later in the data cleaning pipeline, including 
+remove_garbage_codes, which removes unacceptable values and replaces them with NaN
+and extract_ranking, which generates the ordinal ranking variable from an input numerical code
 """
 # import packages
 import pytest
@@ -21,9 +26,17 @@ import prep.prep_data as prep
 #set globals for tests
 FILEPATH = '../data/example_data.csv'
 CLEAN_COLS = ['housing_roof', 'housing_wall', 'housing_floor']
+
 DIGITS = str([str(x) for x in range(100 + 1)])
 PUNCT = '!"\'#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n'
 SPACE = '     '
+
+STR_VARS = ['housing_roof', 'housing_wall', 'housing_floor']
+NUM_VARS = [s + '_num' for s in STR_VARS]
+RANK_VARS = [s + '_rank' for s in STR_VARS]
+
+STR_GARBAGE = ['nan', 'other', 'not a dejure resident', 'not dejure resident']
+RANK_GARBAGE = ['4', '5', '6', '7', '8', '9', 'n']
 
 # if you compile the regex string first, it's even faster
 re_dig = re.compile('\d')
@@ -55,20 +68,40 @@ def test_clean_text():
 # the cols with string values that we want to be cleaned.
 
 
-#TODO, how to cause read_then_clean to raise the row count exception??
+#TODO, this test is for multiple functions. I think it is probably bad practice to test multiple functions in one,
+#but it takes so long to read in the df and clean it that it seems to me more efficient to use a single shot.
 def test_read_then_clean():
     """This function tests that a custom exception called RowCountException
     will be returned when more than 1k rows are expected.
     """
     #read in df using your function and then using pandas regular csv read, then compare the resulting dfs
-    test_df = prep.read_then_clean(FILEPATH, CLEAN_COLS)
-    test_raw = pd.read_csv(FILEPATH)
+    df = prep.read_then_clean(FILEPATH, CLEAN_COLS)
+    raw_csv = pd.read_csv(FILEPATH)
+    
+    #also passed it through the rest of the cleaning pipeline on order to compare df to df_clean
+    df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
+    df_clean = prep.extract_ranking(df_clean, NUM_VARS)
+    df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
     
     #assert that our function did not add or remove rows
-    assert len(test_csv) == len(df), "read_then_clean function is modifying the original csv's length"
-    assert len(df.columns) == len(test_csv.columns), "read_then_clean function is modifying the original csv's width"
+    assert len(raw_csv) == len(df), "read_then_clean function is modifying the original csv's length"
+    assert len(df.columns) == len(raw_csv.columns), "read_then_clean function is modifying the original csv's width"
     
-    #assert that our function cleaned up the strings in the columns we provided
-    #TODO, this test will fail if the columns were entirely clean to begin with (is this possible?)
+    #assert that our initial read function cleaned up the strings in the columns we provided
+    #TODO: this test will fail if the columns were entirely clean to begin with (is this possible?)
     for x in CLEAN_COLS:
-        assert set(df[x].unique()) == set(test_csv[x].unique()) == False, "string columns are unmodified"
+        assert (set(df[x].unique()) == set(raw_csv[x].unique())) == False, "string columns are unmodified"
+        
+    #assert that rankings were generated in the next step of the pipeline
+    for x in RANK_VARS:
+        #verify that it wasnt originally present in df
+        assert (x in df) == False, "rank column present in raw data"
+        #assert that this column was added 
+        assert x in df_clean, "rank column was not added by extract_ranking fx"
+        
+    #assert that garbage was removed 
+    for x in STR_VARS:
+        for y in STR_GARBAGE:
+            print(x, y)
+            #assert that it is removed
+            assert (y in df_clean[x].unique()) == False, "garbage values not removed from clean dataframe"    
