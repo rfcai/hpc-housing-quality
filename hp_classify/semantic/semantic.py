@@ -7,15 +7,19 @@ def filter_one_word_materials(df, base_var):
     :param df: This is a cleaned dataframe containing all the information from the surveys.
     :param base_var: The variable of interest for which some materials are unknown.
 
-     :return df: it returns a dataframe containing the subset of rows for which base_var was described with one word.
+     :return subset: it returns a dataframe containing the subset of rows for which base_var was described with one word.
 
     """
     
     df_one_word = df[base_var].str.get_dummies(sep=' ').T
     df['count_word'] = df_one_word.sum()
-    df = df [df.count_word == 1]
+    
+    if(1 not in df_one_word.sum()):
+        raise NoOneWordException("No material with only one word!")
 
-    return(df)
+    subset = df [df.count_word == 1]
+        
+    return(subset)
 
 def check_if_english(df, base_var):
 
