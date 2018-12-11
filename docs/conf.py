@@ -19,7 +19,6 @@ sys.path.insert(0, os.path.abspath('../hp_classify/model'))
 sys.path.insert(0, os.path.abspath('../hp_classify/prep'))
 sys.path.insert(0, os.path.abspath('../hp_classify/RFC'))
 
-
 # -- Project information -----------------------------------------------------
 
 project = 'Huff & Puff & Classify'
@@ -42,6 +41,7 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'nbsphinx',
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
@@ -56,7 +56,7 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md', '.ipynb']
 
 # The master toctree document.
 master_doc = 'index'
