@@ -36,7 +36,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../software_components.html">Software Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../code.html">Code Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../demo.html">Demo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../environment.html">Environment for Huff &amp; Puff &amp; Classify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environment.html">Environment and Data Acquisition</a></li>
 </ul>
 
             </div>
@@ -65,7 +65,9 @@
 <span class="sd">    digits, and</span>
 <span class="sd">    extra whitespace.</span>
 <span class="sd">    TODO: Add functionality to impute a selected value for NaN or missing values?</span>
+
 <span class="sd">    :param text: This is a text value that needs to be cleaned.</span>
+
 <span class="sd">    :return: text: This function returns a cleaned version of the input text.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># import necessary modules</span>
@@ -115,7 +117,6 @@
 <span class="sd">    and applies the previously defined cleaning functions to a list of variables provided by user.</span>
 
 <span class="sd">    It can also optionally filter the df based on the survey series or TODO language.</span>
-<span class="sd">    TODO: Is it better to return an obj called df_clean to be more explicit to user?</span>
 
 <span class="sd">    :param file_path: This is a string indicating which file that you want to read in.</span>
 <span class="sd">    :param vars_to_clean: This is a list of strings that indicate which columns you want to clean.</span>

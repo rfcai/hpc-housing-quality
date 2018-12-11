@@ -34,14 +34,4 @@ Modeling
 .. automodule:: rfc_build
     :members:
 
-Testing
-=======
-.. automodule:: test_filter_one_word_materials
-    :members:
-
-.. automodule:: test_prep
-    :members:
-
-.. automodule:: test_model
-    :members:
 

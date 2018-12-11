@@ -36,7 +36,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../software_components.html">Software Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../code.html">Code Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../demo.html">Demo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../environment.html">Environment for Huff &amp; Puff &amp; Classify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environment.html">Environment and Data Acquisition</a></li>
 </ul>
 
             </div>
@@ -62,6 +62,9 @@
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sn</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.externals</span> <span class="k">import</span> <span class="n">joblib</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../hp_classify&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">prep.prep_data</span> <span class="k">as</span> <span class="nn">prep</span>
 
 
 <div class="viewcode-block" id="rfc_model"><a class="viewcode-back" href="../code.html#rfc_build.rfc_model">[docs]</a><span class="k">def</span> <span class="nf">rfc_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
@@ -84,7 +87,7 @@
     
 <div class="viewcode-block" id="confusion_matrix"><a class="viewcode-back" href="../code.html#rfc_build.confusion_matrix">[docs]</a><span class="k">def</span> <span class="nf">confusion_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This function generates the confusion matrix of the prediction, Enable plot to generate the figure</span>
-
+<span class="sd">    </span>
 <span class="sd">    :param y: This is the actual rank of the data</span>
 <span class="sd">    :param pred: This is the predicted rank of the data</span>
 <span class="sd">    :param plot: Set to True to generate the plot (default False)</span>
@@ -110,6 +113,38 @@
     
     <span class="k">return</span> <span class="n">loaded_model</span></div>
     
+<div class="viewcode-block" id="demo_rfc"><a class="viewcode-back" href="../code.html#rfc_build.demo_rfc">[docs]</a><span class="k">def</span> <span class="nf">demo_rfc</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="p">,</span><span class="n">FEATURES</span><span class="p">,</span><span class="n">RFC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the demo function for rfc</span>
+<span class="sd">    </span>
+<span class="sd">    Args: </span>
+<span class="sd">        DATA_DIR: data directory path</span>
+<span class="sd">        FEATURES: feature of the model</span>
+<span class="sd">        RFC: loaded rfc model</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">json</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+    <span class="c1">#read in meta data json file , contains category encoding for iso3</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_DIR</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span><span class="s1">&#39;meta.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">meta_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">iso_dict</span> <span class="o">=</span> <span class="n">meta_data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    
+    <span class="c1">#RFC = load_model(&#39;../../examples/finalized_roof_model.sav&#39;)</span>
+
+    <span class="c1">#prompt user to enter data</span>
+    <span class="n">yrs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Type house initial year: &#39;</span><span class="p">))</span>
+    <span class="n">hf</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Type the floor number: &#39;</span><span class="p">))</span>
+    <span class="n">hw</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Type the wall number: &#39;</span><span class="p">))</span>
+    <span class="n">iso</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Type the country iso3 code: &#39;</span><span class="p">)</span>
+    <span class="n">user_input</span> <span class="o">=</span> <span class="p">[</span><span class="n">yrs</span><span class="p">,</span><span class="n">hf</span><span class="p">,</span><span class="n">hw</span><span class="p">,</span><span class="n">iso_dict</span><span class="p">[</span><span class="n">iso</span><span class="p">]]</span>
+    
+    <span class="c1">#prediction based on user input</span>
+    <span class="n">input_</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">user_input</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="n">FEATURES</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+    <span class="n">input_</span> <span class="o">=</span> <span class="n">prep</span><span class="o">.</span><span class="n">ranking</span><span class="p">(</span><span class="n">input_</span><span class="p">,[</span><span class="s1">&#39;wall&#39;</span><span class="p">,</span><span class="s1">&#39;floor&#39;</span><span class="p">])</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">RFC</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">input_</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Predicted as rank </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span></div>
 </pre></div>
 
                 </div>

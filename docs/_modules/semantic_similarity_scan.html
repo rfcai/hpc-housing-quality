@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>semantic_similarity_scan &#8212; Huff &amp; Puff &amp; Classify  documentation</title>
+    <link rel="stylesheet" href="../_static/dotted.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+        <div class="header">
+          <div class="header-top">
+            <h1 class="heading"><a href="../index.html">
+              <span>Huff &amp; Puff &amp; Classify  documentation</span></a></h1>
+            <h2 class="heading"><span>semantic_similarity_scan</span></a></h2>
+          </div>
+          <div class="topnav">
+            
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+            <div class="globaltoc">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../project.html">Project Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software_components.html">Software Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code.html">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../demo.html">Demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../environment.html">Environment and Data Acquisition</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+
+          <div class="document">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <h1>Source code for semantic_similarity_scan</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="semantic_similarity_scan"><a class="viewcode-back" href="../code.html#semantic_similarity_scan.semantic_similarity_scan">[docs]</a><span></span><span class="k">def</span> <span class="nf">semantic_similarity_scan</span><span class="p">(</span><span class="n">unknown_list</span><span class="p">,</span> <span class="n">corpus_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function takes a list of materials for which the rank is unknown (i.e. a word outside our &quot;dictionnary&quot;)</span>
+<span class="sd">    as input and calculates a score of semantic similarity with each word of the list of known material (our &quot;dictionnary&quot;).</span>
+
+<span class="sd">    :param unknown_list: This is a list of strings whose rank is unknown</span>
+<span class="sd">    :param corpus_list: This is a list of the strings for which the rank is known. The strings are classified</span>
+<span class="sd">        within one of three categories of materials.</span>
+<span class="sd">    :return: distrib (DataFrame): The distribution of the similarity scores between each unknown material in the unknown list and known material</span>
+<span class="sd">        in the corpus_list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">nltk</span>
+    <span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="k">import</span> <span class="n">wordnet</span> <span class="k">as</span> <span class="n">wn</span>
+    <span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="k">import</span> <span class="n">fuzz</span>
+    <span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="k">import</span> <span class="n">process</span>
+
+    <span class="n">distrib</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1">#loop over each unknown string</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unknown_list</span><span class="p">)):</span>
+        <span class="n">unknown_str</span> <span class="o">=</span> <span class="n">unknown_list</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;analyzing...&#39;</span><span class="p">,</span> <span class="n">unknown_str</span><span class="p">)</span>
+        <span class="n">unknw_syn</span> <span class="o">=</span> <span class="n">wn</span><span class="o">.</span><span class="n">synsets</span><span class="p">(</span><span class="n">unknown_str</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#loop over each corpus to compute similarity scores for all words in a given housing quality score</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus_list</span><span class="p">)):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~&gt;corpus#&#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus_list</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+
+
+            <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="c1">#loop over each word and compute the similarity score</span>
+            <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)):</span> <span class="c1">#tqdm=progress bar</span>
+                <span class="n">list_syn</span> <span class="o">=</span> <span class="n">wn</span><span class="o">.</span><span class="n">synsets</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="n">z</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">s1</span> <span class="ow">in</span> <span class="n">unknw_syn</span><span class="p">:</span>
+                    <span class="n">score</span> <span class="o">=</span> <span class="p">[</span><span class="n">s1</span><span class="o">.</span><span class="n">path_similarity</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span> <span class="k">for</span> <span class="n">s2</span> <span class="ow">in</span> <span class="n">list_syn</span> <span class="k">if</span> <span class="n">s1</span><span class="o">.</span><span class="n">path_similarity</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+                <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
+
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span> <span class="c1">#append scores to create a distribution for the entire corpus</span>
+
+            <span class="c1">#append distributions of scores</span>
+        <span class="n">distrib</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;word&#39;</span><span class="p">:</span> <span class="n">unknown_str</span><span class="p">,</span>
+                                    <span class="s1">&#39;natural&#39;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                    <span class="s1">&#39;rudimentary&#39;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                                    <span class="s1">&#39;finished&#39;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="c1">#note series method used to overcome differing lengths</span>
+                                    <span class="p">}))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">distrib</span><span class="p">))</span></div>
+</pre></div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+
+        <div class="bottomnav">
+          
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+        </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Adrien Allorant, Ruofan Cai, Joseph Frostad, Kevin Hsu, Tianyi Li.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

@@ -2,11 +2,6 @@ Code Documentation
 ******************
 
 
-Find closest-spelling word
-==========================
-.. automodule:: most_similar_material
-    :members:
-
 Prepare dataset for cross-validation
 ====================================
 .. automodule:: prep_cv
@@ -15,6 +10,17 @@ Prepare dataset for cross-validation
 Clean and train data
 ====================
 .. automodule:: prep_data
+    :members:
+
+Natural Language Processing: spelling and semantics
+===================================================
+.. automodule:: most_similar_material
+    :members:
+
+.. automodule:: semantic
+    :members:
+
+.. automodule:: semantic_similarity_scan
     :members:
 
 Modeling
@@ -28,7 +34,4 @@ Modeling
 .. automodule:: rfc_build
     :members:
 
-This is an example
-==================
-.. automodule:: example
-    :members:
+

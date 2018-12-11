@@ -14,4 +14,4 @@ Given the variety of userbase experience, this toolkit will allow users to inter
 
 Data Sources
 ------------
-This software has been trained on 262 datasets from the Demographic and Health Surveys (DHS), consisting of housing quality surveys in developing countries. The relative housing quality of each household is then computed using an ordinal system, with values representing levels of roof, wall and floor materials.
+This software has been trained on `262 datasets <https://drive.google.com/drive/folders/1ZcTc8uSwtxO0G-p1gAOlDrEIvB22kZUf?usp=sharing>`_ from the Demographic and Health Surveys (DHS), consisting of housing quality surveys in developing countries. The relative housing quality of each household is then computed using an ordinal system, with values representing levels of roof, wall and floor materials.
