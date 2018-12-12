@@ -34,7 +34,7 @@ import prep.prep_data as prep
 import model.fuzzy as fz
 
 # set globals for tests
-FILEPATH = '../data/example_data.csv'
+FILEPATH = '../data/test.pkl'
 CLEAN_COLS = ['housing_roof', 'housing_wall', 'housing_floor']
 
 DIGITS = str([str(x) for x in range(100 + 1)])
@@ -153,4 +153,4 @@ def test_sim_fuzzy_pred():
     assert ("pred" in sim_preds.columns), "prediction column not being generated"
 
     # assert that the prediction was accurate, as expected
-    assert np.allclose(sim_out['piggy_rank_og'], sim_out['pred'])
+    assert np.allclose(sim_out['piggy_rank_og'], sim_out['pred']), "prediction was not correct!"
