@@ -65,24 +65,6 @@ rank_dictionary = {'natural': 1, 'rudimentary': 2, 'finished': 3}
 rank_values = list(rank_dictionary.values())
 rank_keys = list(rank_dictionary.keys())
 
-# build a corpus based on the simulated dataset
-sim_str_list, sim_idk_strings = fz.build_corpus(df_sim, 'piggy', 'piggy_rank', sim_rank_list)
-
-# find distribution of scores for each string
-sim_distrib = fz.fuzzy_scan(sim_idk_strings, sim_str_list)
-
-# predict class based on probability of exceeding similarity cutoff of 75
-sim_preds = fz.fuzzy_predict(sim_distrib, rank_keys, 'word', 75, rank_dictionary)
-
-# merge results back on the test data to validate
-sim_out = df_sim[df_sim['train'] == 0]
-sim_out = pd.merge(sim_out,
-                   sim_preds,
-                   left_on='piggy',
-                   right_on='word',
-                   how='left')
-
-
 def test_build_corpus():
     """This function tests a function that is used to build corpora of known and unknown words from a df
     that contains columns with string value descriptions. The testing is done to confirm that the resulting corpora are built
@@ -114,6 +96,9 @@ def test_sim_fuzzy_corpus():
     grouping.
     """
 
+    # build a corpus based on the simulated dataset
+    sim_str_list, sim_idk_strings = fz.build_corpus(df_sim, 'piggy', 'piggy_rank', sim_rank_list)
+
     # there should only be one unknown word in the simulated df
     assert len(sim_idk_strings) == 1, "the simulated df only has one unknown word!"
 
@@ -126,6 +111,9 @@ def test_sim_fuzzy_distrib():
     is the expected length and shape. ALso tested is the functionality that the words being analayzed in the output
     dataframe are present in the input list of unknown strings.
     """
+
+    # find distribution of scores for each string
+    sim_distrib = fz.fuzzy_scan(sim_idk_strings, sim_str_list)
 
     # the length of the output df should be equal to the length of the longest corpora
     assert len(sim_distrib) == len(max(sim_str_list, key=len)), "the output distribution df is not the correct length"
@@ -141,6 +129,8 @@ def test_sim_fuzzy_pred():
     is the expected length and shape. ALso tested is the functionality that the column of predictions has been generated
     and that the output was 100% accurate as we should expect from the construction of our simulated df.
     """
+    # predict class based on probability of exceeding similarity cutoff of 75
+    sim_preds = fz.fuzzy_predict(sim_distrib, rank_keys, 'word', 75, rank_dictionary)
 
     # the length of the prediction df should be equal to the length of the unknown words corpus
     assert len(sim_preds) == len(sim_idk_strings), "the output prediction df is not the correct length"
@@ -150,6 +140,14 @@ def test_sim_fuzzy_pred():
 
     # the prediction df should contain a column called "pred"
     assert ("pred" in sim_preds.columns), "prediction column not being generated"
+
+    # merge results back on the test data to validate
+    sim_out = df_sim[df_sim['train'] == 0]
+    sim_out = pd.merge(sim_out,
+                       sim_preds,
+                       left_on='piggy',
+                       right_on='word',
+                       how='left')
 
     # assert that the prediction was accurate, as expected
     assert np.allclose(sim_out['piggy_rank_og'], sim_out['pred']), "prediction was not correct!"

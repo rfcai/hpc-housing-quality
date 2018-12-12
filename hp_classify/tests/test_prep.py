@@ -42,16 +42,6 @@ RANK_VARS = [s + '_rank' for s in STR_VARS]
 STR_GARBAGE = ['nan', 'other', 'not a dejure resident', 'not dejure resident']
 RANK_GARBAGE = ['4', '5', '6', '7', '8', '9', 'n']
 
-#read in the df using our function in order to pass to later tests
-#read in df using your function and then using pandas regular csv read, then compare the resulting dfs
-df = prep.read_then_clean(FILEPATH, STR_VARS)
-raw_csv = pd.read_csv(FILEPATH)
-
-#also passed it through the rest of the cleaning pipeline on order to compare df to df_clean
-df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
-df_clean = prep.extract_ranking(df_clean, NUM_VARS)
-df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
-
 def test_globals():
     """This function tests that the test globals are properly defined.
     """
@@ -75,7 +65,12 @@ def test_clean_text():
 
 def test_read_then_clean():
     """This function tests our master function and the subsquent data cleaning pipeline.
-    """    
+    """
+    # read in the df using our function in order to pass to later tests
+    # read in df using your function and then using pandas regular csv read, then compare the resulting dfs
+    df = prep.read_then_clean(FILEPATH, STR_VARS)
+    raw_csv = pd.read_csv(FILEPATH)
+
     #assert that our function did not add or remove rows
     assert len(raw_csv) == len(df), "read_then_clean function is modifying the original csv's length"
     assert len(df.columns) == len(raw_csv.columns), "read_then_clean function is modifying the original csv's width"
@@ -88,7 +83,17 @@ def test_read_then_clean():
 def test_cleaning_pipeline():
     """This function tests our cleaning pipeline to make sure that 
     garbage values are removed and ranks are create
-    """ 
+    """
+    # read in the df using our function in order to pass to later tests
+    # read in df using your function and then using pandas regular csv read, then compare the resulting dfs
+    df = prep.read_then_clean(FILEPATH, STR_VARS)
+    raw_csv = pd.read_csv(FILEPATH)
+
+    # also passed it through the rest of the cleaning pipeline on order to compare df to df_clean
+    df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
+    df_clean = prep.extract_ranking(df_clean, NUM_VARS)
+    df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
+
     #assert that rankings were generated in the next step of the pipeline
     for x in RANK_VARS:
         #verify that it wasnt originally present in df
