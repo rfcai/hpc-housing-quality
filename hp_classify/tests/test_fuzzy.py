@@ -35,7 +35,6 @@ import model.fuzzy as fz
 
 # set globals for tests
 FILEPATH = '../data/test.pkl'
-CLEAN_COLS = ['housing_roof', 'housing_wall', 'housing_floor']
 
 DIGITS = str([str(x) for x in range(100 + 1)])
 PUNCT = '!"\'#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n'
@@ -51,7 +50,7 @@ RANK_GARBAGE = ['4', '5', '6', '7', '8', '9', 'n']
 RANK_LIST = ['1', '2', '3']
 
 # read in example data using your function and then pass it through the cleaning pipeline
-df = prep.read_then_clean(FILEPATH, CLEAN_COLS)
+df = prep.read_then_clean(FILEPATH, STR_VARS)
 df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
 df_clean = prep.extract_ranking(df_clean, NUM_VARS)
 df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)

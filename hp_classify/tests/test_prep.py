@@ -24,9 +24,7 @@ sys.path.append('.')
 import prep.prep_data as prep
 
 #set globals for tests
-#set globals for tests
-FILEPATH = '../data/housing_data.csv'
-CLEAN_COLS = ['housing_roof', 'housing_wall', 'housing_floor']
+FILEPATH = '../data/test.pkl'
 
 DIGITS = str([str(x) for x in range(100 + 1)])
 PUNCT = '!"\'#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n'
@@ -46,7 +44,7 @@ RANK_GARBAGE = ['4', '5', '6', '7', '8', '9', 'n']
 
 #read in the df using our function in order to pass to later tests
 #read in df using your function and then using pandas regular csv read, then compare the resulting dfs
-df = prep.read_then_clean(FILEPATH, CLEAN_COLS)
+df = prep.read_then_clean(FILEPATH, STR_VARS)
 raw_csv = pd.read_csv(FILEPATH)
 
 #also passed it through the rest of the cleaning pipeline on order to compare df to df_clean
@@ -84,7 +82,7 @@ def test_read_then_clean():
     
     #assert that our initial read function cleaned up the strings in the columns we provided
     #TODO: this test will fail if the columns were entirely clean to begin with (is this possible?)
-    for x in CLEAN_COLS:
+    for x in STR_VARS:
         assert (set(df[x].unique()) == set(raw_csv[x].unique())) == False, "string columns are unmodified"
 
 def test_cleaning_pipeline():

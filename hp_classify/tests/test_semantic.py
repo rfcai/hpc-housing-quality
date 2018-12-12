@@ -11,12 +11,8 @@ sys.path.append('.')
 import prep.prep_data as prep
 import model.semantic as sem
 
-#setup directories
-CWD = os.getcwd()
-HOME_DIR = os.path.abspath(os.path.join(CWD, os.pardir))
-DATA_DIR = HOME_DIR + "/data"
-DATA_FILENAME = "example_data.csv"
-RESULTS_DIR = HOME_DIR + "/results"
+#set globals for tests
+FILEPATH = '../data/test.pkl'
 
 #setup lists of vars to work with
 STR_VARS = ['housing_roof', 'housing_wall', 'housing_floor']
@@ -37,7 +33,7 @@ RANK_GARBAGE = ['4', '5', '6', '7', '8', '9', 'n']
 #dictionaries
 PRED_DICT = {'natural':'1', 'rudimentary':'2', 'finished':'3'} #map categories back to ranks
 
-df = prep.read_then_clean(DATA_DIR + "/" + DATA_FILENAME, STR_VARS, SVY_FILTER)
+df = prep.read_then_clean(FILEPATH, STR_VARS)
 df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
 df_clean = prep.extract_ranking(df_clean, NUM_VARS)
 df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
