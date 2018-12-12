@@ -69,7 +69,7 @@ def test_read_then_clean():
     # read in the df using our function in order to pass to later tests
     # read in df using your function and then using pandas regular csv read, then compare the resulting dfs
     df = prep.read_then_clean(FILEPATH, STR_VARS)
-    raw_df = pd.read_pkl(FILEPATH)
+    raw_df = pd.read_pickle(FILEPATH)
 
     #assert that our function did not add or remove rows
     assert len(raw_df) == len(df), "read_then_clean function is modifying the original csv's length"
