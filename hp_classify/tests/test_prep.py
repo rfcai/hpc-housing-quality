@@ -21,7 +21,7 @@ import re
 #import custom modules fpr testing
 import sys 
 sys.path.append('.')
-import prep.prep_data as prep
+from hp_classify.prep import prep_data as prep
 
 #set globals for tests
 FILEPATH = '../data/test.pkl'

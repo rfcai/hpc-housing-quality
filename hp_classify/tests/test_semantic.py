@@ -6,10 +6,8 @@
 #import custom modules fpr testing
 import os
 import pytest
-import sys
-sys.path.append('.')
-import prep.prep_data as prep
-import model.semantic as sem
+from hp_classify.prep import prep_data as prep
+from hp_classify.model import semantic as sem
 
 #set globals for tests
 FILEPATH = '../data/test.pkl'
