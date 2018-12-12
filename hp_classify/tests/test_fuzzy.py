@@ -111,6 +111,8 @@ def test_sim_fuzzy_distrib():
     is the expected length and shape. ALso tested is the functionality that the words being analayzed in the output
     dataframe are present in the input list of unknown strings.
     """
+    # build a corpus based on the simulated dataset
+    sim_str_list, sim_idk_strings = fz.build_corpus(df_sim, 'piggy', 'piggy_rank', sim_rank_list)
 
     # find distribution of scores for each string
     sim_distrib = fz.fuzzy_scan(sim_idk_strings, sim_str_list)
@@ -129,6 +131,11 @@ def test_sim_fuzzy_pred():
     is the expected length and shape. ALso tested is the functionality that the column of predictions has been generated
     and that the output was 100% accurate as we should expect from the construction of our simulated df.
     """
+    # build a corpus based on the simulated dataset
+    sim_str_list, sim_idk_strings = fz.build_corpus(df_sim, 'piggy', 'piggy_rank', sim_rank_list)
+    # find distribution of scores for each string
+    sim_distrib = fz.fuzzy_scan(sim_idk_strings, sim_str_list)
+
     # predict class based on probability of exceeding similarity cutoff of 75
     sim_preds = fz.fuzzy_predict(sim_distrib, rank_keys, 'word', 75, rank_dictionary)
 

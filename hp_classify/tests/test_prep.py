@@ -69,16 +69,16 @@ def test_read_then_clean():
     # read in the df using our function in order to pass to later tests
     # read in df using your function and then using pandas regular csv read, then compare the resulting dfs
     df = prep.read_then_clean(FILEPATH, STR_VARS)
-    raw_csv = pd.read_csv(FILEPATH)
+    raw_df = pd.read_pkl(FILEPATH)
 
     #assert that our function did not add or remove rows
-    assert len(raw_csv) == len(df), "read_then_clean function is modifying the original csv's length"
-    assert len(df.columns) == len(raw_csv.columns), "read_then_clean function is modifying the original csv's width"
+    assert len(raw_df) == len(df), "read_then_clean function is modifying the original csv's length"
+    assert len(df.columns) == len(raw_df.columns), "read_then_clean function is modifying the original csv's width"
     
     #assert that our initial read function cleaned up the strings in the columns we provided
     #TODO: this test will fail if the columns were entirely clean to begin with (is this possible?)
     for x in STR_VARS:
-        assert (set(df[x].unique()) == set(raw_csv[x].unique())) == False, "string columns are unmodified"
+        assert (set(df[x].unique()) == set(raw_df[x].unique())) == False, "string columns are unmodified"
 
 def test_cleaning_pipeline():
     """This function tests our cleaning pipeline to make sure that 
@@ -87,7 +87,6 @@ def test_cleaning_pipeline():
     # read in the df using our function in order to pass to later tests
     # read in df using your function and then using pandas regular csv read, then compare the resulting dfs
     df = prep.read_then_clean(FILEPATH, STR_VARS)
-    raw_csv = pd.read_csv(FILEPATH)
 
     # also passed it through the rest of the cleaning pipeline on order to compare df to df_clean
     df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
