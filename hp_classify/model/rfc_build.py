@@ -33,7 +33,7 @@ def rfc_model(x, y, label):
     joblib.dump(RFC, filename)
     return RFC
     
-def confusion_matrix(y, pred, plot=False):
+def confusion_matrix(y, pred, c_list, plot=False):
     """This function generates the confusion matrix of the prediction, Enable plot to generate the figure
     
     :param y: This is the actual rank of the data
@@ -44,11 +44,12 @@ def confusion_matrix(y, pred, plot=False):
     """
     #confusion matrix 
     conf_matrix = pd.crosstab(y, pred, rownames=['Actual Rank'], colnames=['Predicted Rank'])
-    
+
     if plot:
         #plot heatmap
         plt.figure(figsize = (10,7))
         sn.heatmap(conf_matrix, annot=True)
+    return conf_matrix
     
 def load_model(filename):
     """This function loads the saved model in the current directory

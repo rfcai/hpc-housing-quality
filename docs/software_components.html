@@ -36,13 +36,14 @@
         </p>
 
             <div class="globaltoc">
-              <ul class="current">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="project.html">Project Summary</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Software Components</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#database-manager">Database manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization-manager">Visualization manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#model-manager">Model manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#visualization-manager-coming-soon">Visualization manager (coming soon)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#prediction-manager-coming-soon">Prediction manager (coming soon)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prediction-manager">Prediction manager</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="code.html">Code Documentation</a></li>
@@ -67,16 +68,16 @@
 <p>Simplified interface to access the databases containing the raw input data and the output predictions of ordinal score for housing quality
 This component will be responsible for data pre-processing and for building representative test and training datasets in order to inform a cross-validation modelling approach</p>
 </div>
-<div class="section" id="model-manager">
-<h2>Model manager<a class="headerlink" href="#model-manager" title="Permalink to this headline">¶</a></h2>
-<p>Accesses pre-processed input data as training/test subdata and uses ML/NLP toolkits in order to analyze relationships between string keywords and ordinal values relating to quality</p>
-</div>
-<div class="section" id="visualization-manager-coming-soon">
-<h2>Visualization manager (coming soon)<a class="headerlink" href="#visualization-manager-coming-soon" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="visualization-manager">
+<h2>Visualization manager<a class="headerlink" href="#visualization-manager" title="Permalink to this headline">¶</a></h2>
 <p>Accesses intermediate and final outputs in order to create maps of housing quality and visualize the networks resulting from interdependencies across the universe of potential string and ordinal values</p>
 </div>
-<div class="section" id="prediction-manager-coming-soon">
-<h2>Prediction manager (coming soon)<a class="headerlink" href="#prediction-manager-coming-soon" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="model-manager">
+<h2>Model manager<a class="headerlink" href="#model-manager" title="Permalink to this headline">¶</a></h2>
+<p>Accesses pre-processed input data as training/test subdata and uses ML toolkits in order to analyze relationships between string keywords and ordinal values relating to quality</p>
+</div>
+<div class="section" id="prediction-manager">
+<h2>Prediction manager<a class="headerlink" href="#prediction-manager" title="Permalink to this headline">¶</a></h2>
 <p>Input the characteristics of housing (material of the roof/walls/floor), and results of model built/optimized using training dataset, then produces as output an ordinal score for housing quality</p>
 </div>
 </div>

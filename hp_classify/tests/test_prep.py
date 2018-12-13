@@ -40,6 +40,10 @@ re_white = re.compile(' +')
 STR_VARS = ['housing_roof', 'housing_wall', 'housing_floor']
 NUM_VARS = [s + '_num' for s in STR_VARS]
 RANK_VARS = [s + '_rank' for s in STR_VARS]
+LABEL = 'roof'
+ATTR = ['int_year', 'housing_roof_num', 'housing_wall_num',
+        'housing_floor_num', 'iso3']
+VAR = ['roof','floor','wall']
 
 STR_GARBAGE = ['nan', 'other', 'not a dejure resident', 'not dejure resident']
 RANK_GARBAGE = ['4', '5', '6', '7', '8', '9', 'n']
@@ -53,6 +57,14 @@ raw_csv = pd.read_csv(FILEPATH)
 df_clean = prep.remove_garbage_codes(df, STR_VARS, STR_GARBAGE)
 df_clean = prep.extract_ranking(df_clean, NUM_VARS)
 df_clean = prep.remove_garbage_codes(df_clean, RANK_VARS, RANK_GARBAGE)
+
+#test setup for rfc model data preprocessing functions
+df_rfc = prep.load_data(FILEPATH)
+df_rank_check = prep.ranking(df_rfc, VAR)
+FEATURES = prep.extract_features(df_rank_check,LABEL)
+df_shuffle_check, RANK_NUM = prep.shuffle_redistribute(df_rank_check, LABEL)
+x_train, x_test, y_train, y_test = prep.train_test_split(df_shuffle_check, FEATURES, LABEL)
+
 
 def test_globals():
     """This function tests that the test globals are properly defined.
@@ -104,3 +116,68 @@ def test_cleaning_pipeline():
             print(x, y)
             #assert that it is removed
             assert (y in df_clean[x].unique()) == False, "garbage values not removed from clean dataframe"    
+
+def test_load_data():
+    """This function tests that our output dataframe contains the correct 
+    columns and have no missing data nor zeros
+    """
+    #assert that dataframe contains the specified columns
+    assert list(df_rfc) == ATTR
+    #assert that there is no zeros in dataframe
+    assert df_rfc.eq(0).any().any() == False
+    #assert that there is no missing values in dataframe
+    assert df_rfc.notnull().values.any() == True
+    
+def test_df_manipulation():
+    """This function tests if the special characters are filtered out, and if the rank columns are 
+    correctly created
+    """
+    #assert that the three columns for rank have been created 
+    assert set(['roof_rank','wall_rank','floor_rank']).issubset(df_rank_check.columns) == True
+    
+    #
+    assert df_rank_check.eq('.').any().any() == False
+    assert df_rank_check.eq('?').any().any() == False
+    
+    #
+    for var in VAR:
+        assert df_rank_check['housing_'+var+'_num'].dtype == 'float64'
+        assert (df_rank_check['housing_'+var+'_num']>35).any() == False
+        assert (df_rank_check['housing_'+var+'_num']<10).any() == False
+        assert df_rank_check[var+'_rank'].eq(0).any() == False
+        assert (df_rank_check[var+'_rank']>3).any() == False
+        
+def test_features():
+    """This function tests if the features are the six input features as designed
+    """
+    #assert that length is correct, and label related features are excluded
+    assert len(prep.extract_features(df_rank_check,'roof')) == 6
+    assert LABEL+'_rank' not in prep.extract_features(df_rank_check,'roof')
+    assert 'housing'+LABEL+'_num' not in prep.extract_features(df_rank_check,'roof')
+    
+def test_shuffle():
+    """This function tests if the data is shuffle randomly and equally
+    distributed rank dataframe 
+    """
+    import random
+    threshold = 1000
+    #check is the data is approx equally distributed based on each rank with a give therhold
+    avg = int(sum(RANK_NUM)/3)
+    for rank in RANK_NUM:
+        assert abs(avg - rank) < threshold
+    #randomly check if the data frame is shuffled
+    for rand in range(10):
+        rand = random.randint(1,len(df_shuffle_check))
+        assert df_shuffle_check.iloc[rand,:].any() != df_rank_check.iloc[rand,:].any()
+        
+def test_data_split():
+    """This function checks if the feature and label length matchs, and also the
+    data type of the encoded feature iso3
+    """
+    #assert the length of the feature and label set in both testing and training data
+    assert len(x_test) == len(y_test)
+    assert len(x_train) == len(y_train)
+    
+    #assert that the iso3 country codes have been encoded to integers
+    assert x_test['iso3'].dtype == 'int64'
+        
