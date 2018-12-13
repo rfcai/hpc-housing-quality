@@ -65,7 +65,6 @@ def read_then_clean(file_path, vars_to_clean, filter_series=None):
     and applies the previously defined cleaning functions to a list of variables provided by user.
 
     It can also optionally filter the df based on the survey series or TODO language.
-    TODO: Is it better to return an obj called df_clean to be more explicit to user?
 
     :param file_path: This is a string indicating which file that you want to read in.
     :param vars_to_clean: This is a list of strings that indicate which columns you want to clean.
@@ -80,7 +79,11 @@ def read_then_clean(file_path, vars_to_clean, filter_series=None):
 
     # read in your data
     print("~begin reading")
-    df_raw = pd.read_csv(file_path, low_memory=False)
+    # add functionality to read in both csv and pkl formats
+    if "csv" in file_path:
+        df_raw = pd.read_csv(file_path, low_memory=False)
+    else:
+        df_raw = pd.read_pickle(file_path)
     min_nrow = len(df_raw)  # save the row count to test after cleaning and verify that rows are not being dropped
     print("data read!")
 
