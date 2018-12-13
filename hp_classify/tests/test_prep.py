@@ -23,7 +23,7 @@ import prep.prep_data as prep
 
 # set globals for tests
 # set globals for tests
-FILEPATH = '../data/housing_data.csv'
+FILEPATH = '../data/example_data.csv'
 CLEAN_COLS = ['housing_roof', 'housing_wall', 'housing_floor']
 
 DIGITS = str([str(x) for x in range(100 + 1)])
