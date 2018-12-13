@@ -22,7 +22,7 @@ from sklearn.externals import joblib
 import sys
 sys.path.append('../hp_classify')
 import prep.prep_data as prep
-import rfc_build as rf
+import model.rfc_build as rf
 
 #Gobals
 FILEPATH = '../data/housing_data.csv'
