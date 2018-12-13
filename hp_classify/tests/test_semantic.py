@@ -9,7 +9,7 @@ from hp_classify.prep import prep_data as prep
 from hp_classify.model import semantic as sem
 
 #set globals for tests
-FILEPATH = '../../data/test.pkl'
+FILEPATH = '../data/test.pkl'
 
 #setup lists of vars to work with
 STR_VARS = ['housing_roof', 'housing_wall', 'housing_floor']
