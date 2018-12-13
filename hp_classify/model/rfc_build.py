@@ -46,6 +46,7 @@ def confusion_matrix(y, pred, plot=False):
         #plot heatmap
         plt.figure(figsize = (10,7))
         sn.heatmap(conf_matrix, annot=True)
+    return conf_matrix
     
 def load_model(filename):
     """This function loads the saved model in the current directory
